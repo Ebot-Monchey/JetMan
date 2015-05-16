@@ -83,6 +83,11 @@ public:
 	* Determines whether two rectangles intersect or not.
 	*/
 	bool intersects(Rectangle rect);
+private:
+	float x;
+	float y;
+	float width;
+	float height;
 };
 
 /*
