@@ -13,25 +13,25 @@
 class SoundManager {
 public:
 	/*
-	* Initilaises the sound manager and loads all the resources.
-	*/
+	 * Initilaises the sound manager and loads all the resources.
+	 */
 	SoundManager();
 	/*
-	* Cleans up allocated resources.
-	*/
+	 * Cleans up allocated resources.
+	 */
 	~SoundManager();
 	/*
-	* The different sounds that can be played.
-	*/
+	 * The different sounds that can be played.
+	 */
 	enum SoundTrack { INTRO };
 
-/*
-	* Plays a sound in the given playback mode.
-	*/
+	/*
+	 * Plays a sound in the given playback mode.
+	 */
 	void playSound(SoundTrack sound, ALLEGRO_PLAYMODE mode);
 private:
 	ALLEGRO_SAMPLE *introTrack;
-	//std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds();
+	std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds();
 };
 
 /*
