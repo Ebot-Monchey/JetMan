@@ -1,11 +1,9 @@
 // Main.cpp contains the main function which is the entry point to the game
 
-
-// Main.cpp contains the main function which is the entry point to the game
-
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_image.h>
 #include "game.h"
 
 void initAllegro() {
@@ -22,14 +20,17 @@ void initAllegro() {
 	if (!al_init_acodec_addon()) {
 		init = false;
 	}
+	if (!al_init_image_addon()) {
+		init = false;
+	}
 	if (!init) {
 		throw "Could not fully initialise Allegro 5";
 	}
 }
 
 /*
-* Entry point to the game.
-*/
+ * Entry point to the game.
+ */
 int main(int n, char** args) {
 	initAllegro();
 	Game game;
