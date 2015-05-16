@@ -8,8 +8,8 @@
 #include <unordered_map>
 
 /*
-* Handles the sound loading and playing.
-*/
+ * Handles the sound loading and playing.
+ */
 class SoundManager {
 public:
 	/*
@@ -35,53 +35,76 @@ private:
 };
 
 /*
-* Used for representing the bounds of objects.
-*/
+ * Class to handle working with images.
+ */
+class ImageManager {
+public:
+	/*
+	 * Creates a new ImageManager.
+	 */
+	ImageManager();
+	/*
+	 * Frees allocated memory.
+	 */
+	~ImageManager();
+	/*
+	 * The different images available.
+	 */
+	enum Image {BACKGROUND};
+	/*
+	 * Retrieves the Bitmap linked to the Image enum.
+	 */
+	ALLEGRO_BITMAP* getImage(Image image);
+};
+
+/*
+ * Used for representing the bounds of objects.
+ */
 class Rectangle {
 public:
 	/*
-	* Creates a new rectangle with the given bounds.
-	*/
+	 * Creates a new rectangle with the given bounds.
+	 */
 	Rectangle(float x, float y, float width, float height);
 	/*
-	* Gets the x coordinate of the rectangle.
-	*/
+	 * Gets the x coordinate of the rectangle.
+	 */
 	float getX();
 	/*
-	* Sets the x coordinate of the rectangle.
-	*/
+	 * Sets the x coordinate of the rectangle.
+	 */
 	void setX(float x);
 	/*
-	* Gets the x coordinate of the rectangle.
-	*/
+	 * Gets the x coordinate of the rectangle.
+	 */
 	float getY();
 	/*
-	* Sets the y coordinate of the rectangle.
-	*/
+	 * Sets the y coordinate of the rectangle.
+	 */
 	void setY(float y);
 	/*
-	* Gets the width of the rectangle.
-	*/
+	 * Gets the width of the rectangle.
+	 */
 	float getWidth();
 	/*
-	* Sets the width of the rectangle.
-	*/
+	 * Sets the width of the rectangle.
+	 */
 	void setWidth(float width);
 	/*
-	* Gets the height of the rectangle.
-	*/
+	 * Gets the height of the rectangle.
+	 */
 	float getHeight();
 	/*
-	* Sets the height of the rectangle.
-	*/
+	 * Sets the height of the rectangle.
+	 */
 	void setHeight(float height);
 	/*
-	* Sets the bounds of the rectangle.
-	*/
+	 * Sets the bounds of the rectangle.
+	 */
 	void setBounds(float x, float y, float width, float height);
 	/*
-	* Determines whether two rectangles intersect or not.
-	*/
+	 * Determines whether two rectangles intersect or not.
+	 */
 	bool intersects(Rectangle rect);
 private:
 	float x;

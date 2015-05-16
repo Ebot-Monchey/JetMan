@@ -17,5 +17,7 @@ SoundManager::~SoundManager() {
 }
 
 void SoundManager::playSound(SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode) {
-	al_play_sample(introTrack, 1.0, 0.0, 1.0, mode, NULL);
+	if (sound == INTRO) {
+		al_play_sample(introTrack, 1.0, 0.0, 1.0, mode, NULL);
+	}
 }
