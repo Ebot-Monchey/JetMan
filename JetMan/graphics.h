@@ -4,6 +4,8 @@
 #define GRAPHICS_H
 
 #include <vector>
+#include <string>
+#include <allegro5/allegro_font.h>
 #include "utils.h"
 
 namespace JetMan {
@@ -16,7 +18,7 @@ namespace JetMan {
 			/*
 			 * Initialises the bounding rectangle.
 			 */
-			Displayable();
+			Displayable() : bounds(JetMan::Utils::Rectangle(0, 0, 0, 0)) {}
 			/*
 			 * Gets the bounding rectangle of the displayable object.
 			 */
@@ -56,7 +58,7 @@ namespace JetMan {
 			/*
 			 * Creates a new panel.
 			 */
-			Panel();
+			Panel() {}
 			/*
 			 * Adds the widget to this panel.
 			 */
@@ -75,6 +77,33 @@ namespace JetMan {
 			void onClick(JetMan::Utils::Rectangle mouse);
 		private:
 			std::vector<Widget*> widgets;			// The widgets on the panel.
+		};
+
+		/*
+		 * A label of text.
+		 */
+		class Label : public Widget {
+		public:
+			/*
+			 * Creates a new label with the given text and font.
+			 */
+			Label(std::string l, ALLEGRO_FONT* f) : label(l), font(f), colour(al_map_rgb(0, 0, 0)) {}
+			/*
+			 * Changes the text of the label.
+			 */
+			void setText(std::string label);
+			/*
+			 * Sets the colour of the label.
+			 */
+			void setColour(ALLEGRO_COLOR colour);
+			/*
+			 * Draws the text.
+			 */
+			void draw();
+		private:
+			std::string label;			// The label's text.
+			ALLEGRO_FONT* font;			// The font to be used.
+			ALLEGRO_COLOR colour;		// The colour for the text.
 		};
 	}
 }

@@ -4,6 +4,8 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "game.h"
 
 void initAllegro() {
@@ -23,6 +25,8 @@ void initAllegro() {
 	if (!al_init_image_addon()) {
 		init = false;
 	}
+	al_init_font_addon();
+	al_init_ttf_addon();
 	if (!init) {
 		throw "Could not fully initialise Allegro 5";
 	}
@@ -33,6 +37,6 @@ void initAllegro() {
  */
 int main(int n, char** args) {
 	initAllegro();
-	Game game;
+	JetMan::Game game;
 	return game.loop();
 }

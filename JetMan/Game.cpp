@@ -29,14 +29,14 @@ void JetMan::Game::initGame() {
 	eventQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_display_event_source(gameWindow));
 	al_set_window_title(gameWindow, "JetMan");
-	soundManager.playSound(SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);
+	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);
 }
 
 /*
 * The main game loop.
 */
 int JetMan::Game::loop() {
-	al_draw_bitmap(imageManager.getImage(ImageManager::BACKGROUND), 0, 0, NULL);
+	al_draw_bitmap(imageManager.getImage(JetMan::Utils::ImageManager::BACKGROUND), 0, 0, NULL);
 	al_flip_display();
 
 	ALLEGRO_EVENT nextEvent;

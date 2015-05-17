@@ -33,7 +33,7 @@ namespace JetMan {
 			void playSound(SoundTrack sound, ALLEGRO_PLAYMODE mode);
 		private:
 			ALLEGRO_SAMPLE *introTrack;
-			std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds();
+			std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds;
 		};
 
 		/*

@@ -27,8 +27,8 @@ namespace JetMan {
 	private:
 		ALLEGRO_DISPLAY *gameWindow;			// The main window for outputting graphics.
 		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events.
-		SoundManager soundManager;				// The sound manager.
-		ImageManager imageManager;				// The image manager.
+		JetMan::Utils::SoundManager soundManager;				// The sound manager.
+		JetMan::Utils::ImageManager imageManager;				// The image manager.
 
 		/*
 		 * Initialises the game components.
