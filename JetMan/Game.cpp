@@ -50,18 +50,18 @@ void JetMan::Game::initGame() {
 
 	mainMenu.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
 	title = new JetMan::Graphics::Label("JetMan", bigFont);
-	title->setPosition(250, 0);
-	title->setColour(al_map_rgb(0, 100, 255));
+	title->setPosition(260, 100);
+	title->setColour(al_map_rgb(7, 70, 70));
 	mainMenu.addWidget(title);
 
 	play = new JetMan::Game::PlayButton(this);
-	play->setPosition(350, 150);
+	play->setPosition(360, 250);
 	mainMenu.addWidget(play);
 	demo = new JetMan::Game::DemoButton(this);
-	demo->setPosition(350, 200);
+	demo->setPosition(360, 300);
 	mainMenu.addWidget(demo);
 	quit = new JetMan::Game::QuitButton(this);
-	quit->setPosition(350, 250);
+	quit->setPosition(360, 350);
 	mainMenu.addWidget(quit);
 
 	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);

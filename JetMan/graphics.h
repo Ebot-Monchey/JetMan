@@ -174,6 +174,7 @@ namespace JetMan {
 		 */
 		class InformationBox : public Widget {
 		public:
+			enum State{ ACTIVE, PAUSED, OVER };
 			/*
 			 * Creates a new Information Box.
 			 */
@@ -186,11 +187,17 @@ namespace JetMan {
 			 * Sets the state of the game. A different instruction message will be displayed depending on whether the game
 			 * is paused or not.
 			 */
-			void setPaused(bool paused);
+			void setState(State state);
 			/*
 			 * Draws the InformationBox.
 			 */
 			void draw();
+		private:
+			ALLEGRO_FONT* font;			// The font to use when drawing the text.
+			ALLEGRO_COLOR white;		// White
+			ALLEGRO_COLOR black;		// Black
+			int score;					// The score to be displayed
+			State state;				// Whether the game is paused.
 		};
 
 		/*

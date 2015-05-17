@@ -246,3 +246,49 @@ JetMan::Graphics::Sprite::Sprite(ALLEGRO_BITMAP* i) : image(i) {
 	bounds.setHeight(al_get_bitmap_height(i));
 	setBounds(bounds);
 }
+
+// =======================InformationBox==========================
+/*
+ * Creates a new Information Box.
+ */
+JetMan::Graphics::InformationBox::InformationBox(float width, float height, ALLEGRO_FONT* font) : white(al_map_rgb(255, 255, 255)), black(al_map_rgb(0, 0, 0)) {
+	JetMan::Utils::Rectangle bounds = getBounds();
+	bounds.setWidth(width);
+	bounds.setHeight(height);
+	setBounds(bounds);
+	this->font = font;
+}
+
+/*
+ * Updates the score to be displayed.
+ */
+void JetMan::Graphics::InformationBox::updateScore(int score) {
+	this->score = score;
+}
+
+/*
+ * Sets the state of the game. A different instruction message will be displayed depending on whether the game
+ * is paused or not.
+ */
+void JetMan::Graphics::InformationBox::setState(State state) {
+	this->state = state;
+}
+
+/*
+ * Draws the InformationBox.
+ */
+void JetMan::Graphics::InformationBox::draw() {
+	const char *scoreText = std::to_string(score).c_str();
+	JetMan::Utils::Rectangle bounds = getBounds();
+	al_draw_filled_rectangle(0, 0, bounds.getWidth(), bounds.getHeight(), black);
+	al_draw_text(font, white, 20, 20, ALLEGRO_ALIGN_LEFT, scoreText);
+	if (state==PAUSED) {
+		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to resume]");
+	}
+	else if(state==ACTIVE){
+		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Pause]");
+	}
+	else {
+		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to restart]");
+	}
+}
