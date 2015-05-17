@@ -80,13 +80,18 @@ namespace JetMan {
 		JetMan::Graphics::Panel *currDisplay;	// The current display.
 		ALLEGRO_FONT* bigFont;					// Font for the title of the game.
 		ALLEGRO_FONT* normalFont;				// Font used for everything else.
+
 		JetMan::Graphics::Panel mainMenu;		// The main menu screen.
 		JetMan::Graphics::Label* title;			// The title of the game.
 		PlayButton* play;						// The play button.
 		DemoButton* demo;						// The demo button.
 		QuitButton* quit;						// The quit button.
 
+		JetMan::Graphics::Panel gameScreen;		// The game screen.
+		JetMan::Graphics::InformationBox* info;	// The information display at the top of the game screen.
+
 		JetMan::Graphics::Widget* lastHover;	// The last widget the mouse hovered over.
+		JetMan::Graphics::InformationBox::State state;	// The state of the game
 		/*
 		 * Initialises the game components.
 		 */

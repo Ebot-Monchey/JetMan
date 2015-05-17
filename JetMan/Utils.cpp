@@ -23,9 +23,9 @@ JetMan::Utils::SoundManager::~SoundManager() {
 /*
  * Plays a sound file.
  */
-void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode) {
+void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode, float volume) {
 	if (sound == INTRO) {
-		al_play_sample(introTrack, 1.0, 0.0, 1.0, mode, NULL);
+		al_play_sample(introTrack, volume, 0.0, 1.0, mode, NULL);
 	}
 }
 

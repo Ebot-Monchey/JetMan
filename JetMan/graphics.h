@@ -192,6 +192,18 @@ namespace JetMan {
 			 * Draws the InformationBox.
 			 */
 			void draw();
+			/*
+			 * Do nothing.
+			 */
+			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			/*
+			 * Do nothing.
+			 */
+			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
+			/*
+			 * Do nothing.
+			 */
+			void onMouseOut() {}
 		private:
 			ALLEGRO_FONT* font;			// The font to use when drawing the text.
 			ALLEGRO_COLOR white;		// White

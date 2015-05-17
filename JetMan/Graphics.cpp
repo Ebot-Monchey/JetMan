@@ -278,17 +278,19 @@ void JetMan::Graphics::InformationBox::setState(State state) {
  * Draws the InformationBox.
  */
 void JetMan::Graphics::InformationBox::draw() {
-	const char *scoreText = std::to_string(score).c_str();
+	std::string scoreT = "Score: ";
+	scoreT.append(std::to_string(score));
+	const char *scoreText = scoreT.c_str();
 	JetMan::Utils::Rectangle bounds = getBounds();
 	al_draw_filled_rectangle(0, 0, bounds.getWidth(), bounds.getHeight(), black);
-	al_draw_text(font, white, 20, 20, ALLEGRO_ALIGN_LEFT, scoreText);
+	al_draw_text(font, white, 20, 35, ALLEGRO_ALIGN_LEFT, scoreText);
 	if (state==PAUSED) {
-		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to resume]");
+		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Paused! [Press Esc to Quit and Enter to resume]");
 	}
 	else if(state==ACTIVE){
-		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Pause]");
+		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Pause]");
 	}
 	else {
-		al_draw_text(font, white, 400, 20, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to restart]");
+		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to restart]");
 	}
 }

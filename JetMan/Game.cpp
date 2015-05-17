@@ -43,6 +43,7 @@ void JetMan::Game::initGame() {
 	timer = al_create_timer(1 / ((double)60));
 	al_register_event_source(timerQueue, al_get_timer_event_source(timer));
 	al_register_event_source(eventQueue, al_get_mouse_event_source());
+	al_register_event_source(eventQueue, al_get_keyboard_event_source());
 
 	
 	bigFont = al_load_ttf_font("assets/fonts/arial.ttf", 72, NULL);
@@ -64,7 +65,12 @@ void JetMan::Game::initGame() {
 	quit->setPosition(360, 350);
 	mainMenu.addWidget(quit);
 
-	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);
+	gameScreen.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
+	info = new JetMan::Graphics::InformationBox(800, 100, normalFont);
+	gameScreen.addWidget(info);
+
+	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+	state = JetMan::Graphics::InformationBox::OVER;
 
 	lastHover = nullptr;
 	shouldRun = true;
@@ -104,6 +110,36 @@ int JetMan::Game::loop() {
 				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
 				currDisplay->onMouseClick(mouse);
 			}
+			else if (nextEvent.type == ALLEGRO_EVENT_KEY_UP) {
+				if (currDisplay == &(gameScreen)) {
+					if (nextEvent.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+						if (state == JetMan::Graphics::InformationBox::ACTIVE) {
+							// Pause the game
+							state = JetMan::Graphics::InformationBox::PAUSED;
+							info->setState(state);
+						}
+						else {
+							// return to main menu
+							state = JetMan::Graphics::InformationBox::OVER;
+							info->setState(state);
+							currDisplay = &(mainMenu);
+						}
+					}
+					else if (nextEvent.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+						if (state == JetMan::Graphics::InformationBox::PAUSED) {
+							state = JetMan::Graphics::InformationBox::ACTIVE;
+							info->setState(state);
+						}
+						else if (state == JetMan::Graphics::InformationBox::OVER) {
+							state = JetMan::Graphics::InformationBox::ACTIVE;
+							info->setState(state);
+						}
+					}
+					else if (nextEvent.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+
+					}
+				}
+			}
 		}
 		hasNext = al_get_next_event(timerQueue, &nextEvent);
 		if (hasNext) {
@@ -140,7 +176,11 @@ JetMan::Game::PlayButton::PlayButton(JetMan::Game* g) : game(g), JetMan::Graphic
  * Implements the play button being clicked.
  */
 void JetMan::Game::PlayButton::onClick() {
-	
+	game->state = JetMan::Graphics::InformationBox::ACTIVE;
+	game->info->setState(game->state);
+	game->info->updateScore(0);
+	game->currDisplay = &game->gameScreen;
+
 }
 
 /*

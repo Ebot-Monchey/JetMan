@@ -30,7 +30,7 @@ namespace JetMan {
 			/*
 			 * Plays a sound in the given playback mode.
 			 */
-			void playSound(SoundTrack sound, ALLEGRO_PLAYMODE mode);
+			void playSound(SoundTrack sound, ALLEGRO_PLAYMODE mode, float volume);
 		private:
 			ALLEGRO_SAMPLE *introTrack;
 			std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds;
