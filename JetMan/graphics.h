@@ -31,6 +31,21 @@ namespace JetMan {
 		private:
 			JetMan::Utils::Rectangle bounds;			// The bounds of the displayable object.
 		};
+
+		/*
+		 * Represents a user interface component.
+		 */
+		class Widget : public Displayable {
+		public:
+			/*
+			 * Called when the mouse is hovering over the widget.
+			 */
+			virtual void onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
+			/*
+			 * Called when the mouse clicks the widget.
+			 */
+			virtual void onClick(JetMan::Utils::Rectangle mouse) = 0;
+		};
 	}
 }
 
