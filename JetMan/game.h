@@ -32,7 +32,7 @@ namespace JetMan {
 		 */
 		class PlayButton : public JetMan::Graphics::Button {
 		public:
-			PlayButton(Game* g);
+			PlayButton(Game* g) : game(g), JetMan::Graphics::Button("Play", g->normalFont) {}
 			/*
 			 * Implements the play button being clicked.
 			 */
@@ -46,7 +46,7 @@ namespace JetMan {
 		 */
 		class DemoButton : public JetMan::Graphics::Button {
 		public:
-			DemoButton(Game* g);
+			DemoButton(Game* g) : game(g), JetMan::Graphics::Button("Demo", g->normalFont) {}
 			/*
 			* Implements the demo button being clicked.
 			*/
@@ -60,7 +60,7 @@ namespace JetMan {
 		*/
 		class QuitButton : public JetMan::Graphics::Button {
 		public:
-			QuitButton(Game* g);
+			QuitButton(Game* g) : game(g), JetMan::Graphics::Button("Quit", g->normalFont) {}
 			/*
 			* Implements the quit button being clicked.
 			*/

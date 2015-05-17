@@ -285,7 +285,7 @@ void JetMan::Graphics::InformationBox::draw() {
 	al_draw_filled_rectangle(0, 0, bounds.getWidth(), bounds.getHeight(), black);
 	al_draw_text(font, white, 20, 35, ALLEGRO_ALIGN_LEFT, scoreText);
 	if (state==PAUSED) {
-		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Paused! [Press Esc to Quit and Enter to resume]");
+		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Paused [Press Esc to Quit and Enter to resume]");
 	}
 	else if(state==ACTIVE){
 		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Pause]");

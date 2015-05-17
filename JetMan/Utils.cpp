@@ -10,22 +10,39 @@
  */
 JetMan::Utils::SoundManager::SoundManager() {
 	al_reserve_samples(1);
-	introTrack = al_load_sample("assets/sounds/Mission Impossible.wav");
+	sadPiano = al_load_sample("assets/sounds/Sad Piano.wav");
+	missionImpossible = al_load_sample("assets/sounds/Mission Impossible.wav");
 }
 
 /*
  * Frees allocated memory.
  */
 JetMan::Utils::SoundManager::~SoundManager() {
-	al_destroy_sample(introTrack);
+	al_destroy_sample(sadPiano);
+	al_destroy_sample(missionImpossible);
 }
 
 /*
  * Plays a sound file.
  */
 void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode, float volume) {
-	if (sound == INTRO) {
-		al_play_sample(introTrack, volume, 0.0, 1.0, mode, NULL);
+	if (sound == SAD_PIANO) {
+		al_play_sample(sadPiano, volume, 0.0, 1.0, mode, &sadPianoId);
+	}
+	else if (sound == MISSION_IMPOSSIBLE) {
+		al_play_sample(missionImpossible, volume, 0.0, 1.0, mode, &missionImpossibleId);
+	}
+}
+
+/*
+ * Stops playing the sound. Usually for sound tracks that are played in a loop.
+ */
+void JetMan::Utils::SoundManager::stopSound(JetMan::Utils::SoundManager::SoundTrack sound) {
+	if (sound == SAD_PIANO) {
+		al_stop_sample(&sadPianoId);
+	}
+	else if (sound == MISSION_IMPOSSIBLE) {
+		al_stop_sample(&missionImpossibleId);
 	}
 }
 

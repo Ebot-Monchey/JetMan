@@ -25,14 +25,21 @@ namespace JetMan {
 			/*
 			 * The different sounds that can be played.
 			 */
-			enum SoundTrack { INTRO };
+			enum SoundTrack { SAD_PIANO, MISSION_IMPOSSIBLE };
 
 			/*
 			 * Plays a sound in the given playback mode.
 			 */
 			void playSound(SoundTrack sound, ALLEGRO_PLAYMODE mode, float volume);
+			/*
+			 * Stops playing the sound. Usually for sound tracks that are played in a loop.
+			 */
+			void stopSound(SoundTrack sound);
 		private:
-			ALLEGRO_SAMPLE *introTrack;
+			ALLEGRO_SAMPLE *sadPiano;
+			ALLEGRO_SAMPLE_ID sadPianoId;
+			ALLEGRO_SAMPLE *missionImpossible;
+			ALLEGRO_SAMPLE_ID missionImpossibleId;
 			std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds;
 		};
 

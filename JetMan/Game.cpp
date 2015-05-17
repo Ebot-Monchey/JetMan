@@ -69,7 +69,7 @@ void JetMan::Game::initGame() {
 	info = new JetMan::Graphics::InformationBox(800, 100, normalFont);
 	gameScreen.addWidget(info);
 
-	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+	soundManager.playSound(JetMan::Utils::SoundManager::SAD_PIANO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 	state = JetMan::Graphics::InformationBox::OVER;
 
 	lastHover = nullptr;
@@ -117,9 +117,11 @@ int JetMan::Game::loop() {
 							// Pause the game
 							state = JetMan::Graphics::InformationBox::PAUSED;
 							info->setState(state);
+							soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
 						}
 						else {
 							// return to main menu
+							soundManager.playSound(JetMan::Utils::SoundManager::SAD_PIANO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 							state = JetMan::Graphics::InformationBox::OVER;
 							info->setState(state);
 							currDisplay = &(mainMenu);
@@ -127,10 +129,12 @@ int JetMan::Game::loop() {
 					}
 					else if (nextEvent.keyboard.keycode == ALLEGRO_KEY_ENTER) {
 						if (state == JetMan::Graphics::InformationBox::PAUSED) {
+							soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 							state = JetMan::Graphics::InformationBox::ACTIVE;
 							info->setState(state);
 						}
 						else if (state == JetMan::Graphics::InformationBox::OVER) {
+							soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 							state = JetMan::Graphics::InformationBox::ACTIVE;
 							info->setState(state);
 						}
@@ -166,13 +170,6 @@ void JetMan::Game::display() {
 }
 
 /*
- * Constructor for the play button
- */
-JetMan::Game::PlayButton::PlayButton(JetMan::Game* g) : game(g), JetMan::Graphics::Button("Play", g->normalFont) {
-
-}
-
-/*
  * Implements the play button being clicked.
  */
 void JetMan::Game::PlayButton::onClick() {
@@ -180,14 +177,8 @@ void JetMan::Game::PlayButton::onClick() {
 	game->info->setState(game->state);
 	game->info->updateScore(0);
 	game->currDisplay = &game->gameScreen;
-
-}
-
-/*
- * Constructor for the demo button
- */
-JetMan::Game::DemoButton::DemoButton(JetMan::Game* g) : game(g), JetMan::Graphics::Button("Demo", g->normalFont) {
-
+	game->soundManager.stopSound(JetMan::Utils::SoundManager::SAD_PIANO);
+	game->soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 }
 
 /*
@@ -195,13 +186,6 @@ JetMan::Game::DemoButton::DemoButton(JetMan::Game* g) : game(g), JetMan::Graphic
  */
 void JetMan::Game::DemoButton::onClick() {
 	
-}
-
-/*
- * Constructor for the quit button
- */
-JetMan::Game::QuitButton::QuitButton(JetMan::Game* g) : game(g), JetMan::Graphics::Button("Quit", g->normalFont) {
-
 }
 
 /*
