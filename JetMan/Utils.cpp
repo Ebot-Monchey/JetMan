@@ -8,7 +8,7 @@
 /*
  * Initilaises the sound manager and loads all the resources.
  */
-SoundManager::SoundManager() {
+JetMan::Utils::SoundManager::SoundManager() {
 	al_reserve_samples(1);
 	introTrack = al_load_sample("Mission Impossible.wav");
 }
@@ -16,14 +16,14 @@ SoundManager::SoundManager() {
 /*
  * Frees allocated memory.
  */
-SoundManager::~SoundManager() {
+JetMan::Utils::SoundManager::~SoundManager() {
 	al_destroy_sample(introTrack);
 }
 
 /*
  * Plays a sound file.
  */
-void SoundManager::playSound(SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode) {
+void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode) {
 	if (sound == INTRO) {
 		al_play_sample(introTrack, 0.4, 0.0, 1.0, mode, NULL);
 	}
@@ -33,21 +33,21 @@ void SoundManager::playSound(SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mo
 /*
  * Initialises the image manager and loads all the resources.
  */
-ImageManager::ImageManager() {
+JetMan::Utils::ImageManager::ImageManager() {
 	background = al_load_bitmap("background.png");
 }
 
 /*
  * Frees memory allocated to image resources.
  */
-ImageManager::~ImageManager() {
+JetMan::Utils::ImageManager::~ImageManager() {
 	al_destroy_bitmap(background);
 }
 
 /*
  * Gets the image associated with the enum.
  */
-ALLEGRO_BITMAP* ImageManager::getImage(ImageManager::Image image) {
+ALLEGRO_BITMAP* JetMan::Utils::ImageManager::getImage(JetMan::Utils::ImageManager::Image image) {
 	switch (image) {
 	case BACKGROUND:
 		return background;
@@ -61,7 +61,7 @@ ALLEGRO_BITMAP* ImageManager::getImage(ImageManager::Image image) {
 /*
  * Creates a new rectangle with the given bounds.
  */
-Rectangle::Rectangle(float x, float y, float width, float height) {
+JetMan::Utils::Rectangle::Rectangle(float x, float y, float width, float height) {
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -71,63 +71,63 @@ Rectangle::Rectangle(float x, float y, float width, float height) {
 /*
  * Gets the x coordinate of the rectangle.
  */
-float Rectangle::getX() {
+float JetMan::Utils::Rectangle::getX() {
 	return x;
 }
 
 /*
  * Sets the x coordinate of the rectangle.
  */
-void Rectangle::setX(float x) {
+void JetMan::Utils::Rectangle::setX(float x) {
 	this->x = x;
 }
 
 /*
  * Gets the y coordinate of the rectangle.
  */
-float Rectangle::getY() {
+float JetMan::Utils::Rectangle::getY() {
 	return y;
 }
 
 /*
  * Sets the y coordinate of the rectangle.
  */
-void Rectangle::setY(float y) {
+void JetMan::Utils::Rectangle::setY(float y) {
 	this->y = y;
 }
 
 /*
  * Gets the width of the rectangle.
  */
-float Rectangle::getWidth() {
+float JetMan::Utils::Rectangle::getWidth() {
 	return width;
 }
 
 /*
  * Sets the width of the rectangle.
  */
-void Rectangle::setWidth(float width) {
+void JetMan::Utils::Rectangle::setWidth(float width) {
 	this->width = width;
 }
 
 /*
  * Gets the height of the rectangle.
  */
-float Rectangle::getHeight() {
+float JetMan::Utils::Rectangle::getHeight() {
 	return height;
 }
 
 /*
  * Sets the height of the rectangle.
  */
-void Rectangle::setHeight(float height) {
+void JetMan::Utils::Rectangle::setHeight(float height) {
 	this->height = height;
 }
 
 /*
  * Sets the bounds of the rectangle.
  */
-void Rectangle::setBounds(float x, float y, float width, float height) {
+void JetMan::Utils::Rectangle::setBounds(float x, float y, float width, float height) {
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -137,7 +137,7 @@ void Rectangle::setBounds(float x, float y, float width, float height) {
 /*
  * Determines whether the rectangle intersects another rectangle.
  */
-bool Rectangle::intersects(Rectangle rect) {
+bool JetMan::Utils::Rectangle::intersects(JetMan::Utils::Rectangle rect) {
 	if (rect.getX() > x + width) {
 		return false;
 	}

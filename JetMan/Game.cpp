@@ -9,14 +9,14 @@
 /*
 * Makes the calls to initialise allegro and sets up the game components.
 */
-Game::Game() {
+JetMan::Game::Game() {
 	initGame();
 }
 
 /*
 * Frees up memory allocated.
 */
-Game::~Game() {
+JetMan::Game::~Game() {
 	al_destroy_display(gameWindow);
 	al_destroy_event_queue(eventQueue);
 }
@@ -24,7 +24,7 @@ Game::~Game() {
 /*
 * Initialises the game components.
 */
-void Game::initGame() {
+void JetMan::Game::initGame() {
 	gameWindow = al_create_display(800, 600);
 	eventQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_display_event_source(gameWindow));
@@ -35,7 +35,7 @@ void Game::initGame() {
 /*
 * The main game loop.
 */
-int Game::loop() {
+int JetMan::Game::loop() {
 	al_draw_bitmap(imageManager.getImage(ImageManager::BACKGROUND), 0, 0, NULL);
 	al_flip_display();
 
