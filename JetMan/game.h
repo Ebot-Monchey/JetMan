@@ -41,6 +41,34 @@ namespace JetMan {
 			Game* game;
 		};
 
+		/*
+		 * Helper class for the demo button.
+		 */
+		class DemoButton : public JetMan::Graphics::Button {
+		public:
+			DemoButton(Game* g);
+			/*
+			* Implements the demo button being clicked.
+			*/
+			void onClick();
+		private:
+			Game* game;
+		};
+
+		/*
+		* Helper class for buttons.
+		*/
+		class QuitButton : public JetMan::Graphics::Button {
+		public:
+			QuitButton(Game* g);
+			/*
+			* Implements the quit button being clicked.
+			*/
+			void onClick();
+		private:
+			Game* game;
+		};
+
 		ALLEGRO_DISPLAY *gameWindow;			// The main window for outputting graphics.
 		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events.
 		JetMan::Utils::SoundManager soundManager;				// The sound manager.
@@ -54,6 +82,8 @@ namespace JetMan {
 		JetMan::Graphics::Panel mainMenu;		// The main menu screen.
 		JetMan::Graphics::Label* title;			// The title of the game.
 		PlayButton* play;						// The play button.
+		DemoButton* demo;						// The demo button.
+		QuitButton* quit;						// The quit button.
 
 		JetMan::Graphics::Widget* lastHover;	// The last widget the mouse hovered over.
 		/*

@@ -26,6 +26,8 @@ JetMan::Game::~Game() {
 	al_destroy_font(normalFont);
 	delete(title);
 	delete(play);
+	delete(demo);
+	delete(quit);
 }
 
 /*
@@ -53,6 +55,13 @@ void JetMan::Game::initGame() {
 	play = new JetMan::Game::PlayButton(this);
 	play->setPosition(350, 150);
 	mainMenu.addWidget(play);
+	demo = new JetMan::Game::DemoButton(this);
+	demo->setPosition(350, 200);
+	mainMenu.addWidget(demo);
+	quit = new JetMan::Game::QuitButton(this);
+	quit->setPosition(350, 250);
+	mainMenu.addWidget(quit);
+
 	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);
 
 	lastHover = nullptr;
@@ -125,5 +134,33 @@ JetMan::Game::PlayButton::PlayButton(JetMan::Game* g) : game(g), JetMan::Graphic
  * Implements the play button being clicked.
  */
 void JetMan::Game::PlayButton::onClick() {
+	
+}
+
+/*
+ * Constructor for the demo button
+ */
+JetMan::Game::DemoButton::DemoButton(JetMan::Game* g) : game(g), JetMan::Graphics::Button("Demo", g->normalFont) {
+
+}
+
+/*
+ * Implements the demo button being clicked.
+ */
+void JetMan::Game::DemoButton::onClick() {
+	
+}
+
+/*
+ * Constructor for the quit button
+ */
+JetMan::Game::QuitButton::QuitButton(JetMan::Game* g) : game(g), JetMan::Graphics::Button("Quit", g->normalFont) {
+
+}
+
+/*
+ * Implements the quit button being clicked.
+ */
+void JetMan::Game::QuitButton::onClick() {
 	game->shouldRun = false;
 }
