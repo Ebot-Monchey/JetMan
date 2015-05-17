@@ -24,6 +24,10 @@ namespace JetMan {
 			 */
 			JetMan::Utils::Rectangle getBounds();
 			/*
+			 * Sets the position to be drawn to.
+			 */
+			void setPosition(float x, float y);
+			/*
 			 * Sets the bounding rectangle of the displayable object.
 			 */
 			void setBounds(JetMan::Utils::Rectangle bounds);
@@ -109,10 +113,6 @@ namespace JetMan {
 			 */
 			void setColour(ALLEGRO_COLOR colour);
 			/*
-			 * Sets the position to be drawn to.
-			 */
-			void setPosition(float x, float y);
-			/*
 			 * Do nothing on mouse over.
 			 */
 			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
@@ -175,6 +175,10 @@ namespace JetMan {
 		class Sprite : public Displayable {
 		public:
 			/*
+			 * Creates a new sprite with the given image.
+			 */
+			Sprite(ALLEGRO_BITMAP* image);
+			/*
 			 * Sets the velocity of the sprite.
 			 */
 			void setVelocity(float dx, float dy);
@@ -195,17 +199,17 @@ namespace JetMan {
 			 */
 			void setVelocityY(float dy);
 			/*
-			 * Updates the position of the sprite based on its velocity. Calls update state for other user updates.
+			 * Updates the position of the sprite based on its velocity and time elapsed.
 			 */
-			void update();
-			/*
-			 * Other updates should be performed here.
-			 */
-			virtual void updateState();
+			void update(float delta);
 			/*
 			 * Sets the image of the sprite.
 			 */
 			void setImage(ALLEGRO_BITMAP* image);
+			/*
+			 * Draws the sprite to the screen.
+			 */
+			void draw();
 		protected:
 			float dx = 0;					// The horizontal velocity
 			float dy = 0;					// The vertical velocity

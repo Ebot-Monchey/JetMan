@@ -112,7 +112,7 @@ int JetMan::Game::loop() {
 		}
 
 		if (nUpdates == 10) {
-			// Display at 30 fps
+			// Display at 6 fps
 			nUpdates = 0;
 			display();
 		}

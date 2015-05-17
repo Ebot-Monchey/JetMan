@@ -14,6 +14,16 @@ JetMan::Utils::Rectangle JetMan::Graphics::Displayable::getBounds() {
 }
 
 /*
+ * Sets the position of the displayable object.
+ */
+void JetMan::Graphics::Displayable::setPosition(float x, float y) {
+	JetMan::Utils::Rectangle rect = getBounds();
+	rect.setX(x);
+	rect.setY(y);
+	setBounds(rect);
+}
+
+/*
  * Sets the bounding rectangle of the displayable object.
  */
 void JetMan::Graphics::Displayable::setBounds(JetMan::Utils::Rectangle bounds) {
@@ -106,13 +116,6 @@ void JetMan::Graphics::Label::setColour(ALLEGRO_COLOR colour) {
 	this->colour = colour;
 }
 
-void JetMan::Graphics::Label::setPosition(float x, float y) {
-	JetMan::Utils::Rectangle rect = getBounds();
-	rect.setX(x);
-	rect.setY(y);
-	setBounds(rect);
-}
-
 /*
  * Draws the text.
  */
@@ -164,4 +167,82 @@ void JetMan::Graphics::Button::draw() {
 	al_draw_filled_rounded_rectangle(bounds.getX() - 10, bounds.getY() - 10, bounds.getX() + bounds.getWidth() + 10, bounds.getY() + bounds.getHeight() + 10, 5, 5, back);
 	al_draw_text(font, colour, bounds.getX(), bounds.getY(), ALLEGRO_ALIGN_LEFT, label.c_str());
 	al_set_clipping_rectangle(x, y, width, height);
+}
+
+// ====================Sprite==================================
+/*
+ * Sets the velocity of the sprite.
+ */
+void JetMan::Graphics::Sprite::setVelocity(float dx, float dy) {
+	this->dx = dx;
+	this->dy = dy;
+}
+
+/*
+ * Gets the horizontal velocity.
+ */
+float JetMan::Graphics::Sprite::getVelocityX() {
+	return dx;
+}
+
+/*
+ * Sets the horizontal velocity.
+ */
+void JetMan::Graphics::Sprite::setVelocityX(float dx) {
+	this->dx = dx;
+}
+
+/*
+ * Gets the vertical velocity.
+ */
+float JetMan::Graphics::Sprite::getVelocityY() {
+	return dy;
+}
+
+/*
+ * Sets the vertical velocity.
+ */
+void JetMan::Graphics::Sprite::setVelocityY(float dy) {
+	this->dy = dy;
+}
+
+/*
+ * Updates the position of the sprite based on its velocity and time elapsed.
+ */
+void JetMan::Graphics::Sprite::update(float delta) {
+	JetMan::Utils::Rectangle bounds = getBounds();
+	float x = bounds.getX() + dx*delta;
+	float y = bounds.getY() + dy*delta;
+	bounds.setX(x);
+	bounds.setY(y);
+	setBounds(bounds);
+}
+
+/*
+ * Sets the image of the sprite.
+ */
+void JetMan::Graphics::Sprite::setImage(ALLEGRO_BITMAP* image) {
+	this->image = image;
+	JetMan::Utils::Rectangle bounds = getBounds();
+	bounds.setWidth(al_get_bitmap_width(image));
+	bounds.setHeight(al_get_bitmap_height(image));
+	setBounds(bounds);
+}
+
+/*
+ * Sets the image of the sprite.
+ */
+void JetMan::Graphics::Sprite::draw() {
+	JetMan::Utils::Rectangle bounds = getBounds();
+	al_draw_bitmap(image, bounds.getX(), bounds.getY(), NULL);
+}
+
+/*
+ * Creates a new sprite with the given image.
+ */
+JetMan::Graphics::Sprite::Sprite(ALLEGRO_BITMAP* i) : image(i) {
+	JetMan::Utils::Rectangle bounds = getBounds();
+	bounds.setWidth(al_get_bitmap_width(i));
+	bounds.setHeight(al_get_bitmap_height(i));
+	setBounds(bounds);
 }
