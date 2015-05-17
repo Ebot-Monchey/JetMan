@@ -170,6 +170,30 @@ namespace JetMan {
 		};
 
 		/*
+		 * The box which keeps the scorecard and instructions.
+		 */
+		class InformationBox : public Widget {
+		public:
+			/*
+			 * Creates a new Information Box.
+			 */
+			InformationBox(float width, float height, ALLEGRO_FONT* font);
+			/*
+			 * Updates the score to be displayed.
+			 */
+			void updateScore(int score);
+			/*
+			 * Sets the state of the game. A different instruction message will be displayed depending on whether the game
+			 * is paused or not.
+			 */
+			void setPaused(bool paused);
+			/*
+			 * Draws the InformationBox.
+			 */
+			void draw();
+		};
+
+		/*
 		 * Represents an object to be moved around the screen.
 		 */
 		class Sprite : public Displayable {
