@@ -23,6 +23,8 @@ JetMan::Game::~Game() {
 	al_destroy_event_queue(eventQueue);
 	al_destroy_font(bigFont);
 	al_destroy_font(normalFont);
+	delete(title);
+	delete(play);
 }
 
 /*
@@ -34,13 +36,18 @@ void JetMan::Game::initGame() {
 	al_register_event_source(eventQueue, al_get_display_event_source(gameWindow));
 	al_set_window_title(gameWindow, "JetMan");
 
-	root.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
+	mainMenu.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
 	bigFont = al_load_ttf_font("assets/fonts/arial.ttf", 72, NULL);
 	normalFont = al_load_ttf_font("assets/fonts/arial.ttf", 20, NULL);
+
 	title = new JetMan::Graphics::Label("JetMan", bigFont);
 	title->setPosition(250, 0);
 	title->setColour(al_map_rgb(0, 100, 255));
-	root.addWidget(title);
+	mainMenu.addWidget(title);
+
+	play = new JetMan::Graphics::Button("Play", normalFont);
+	play->setPosition(350, 150);
+	mainMenu.addWidget(play);
 	soundManager.playSound(JetMan::Utils::SoundManager::INTRO, ALLEGRO_PLAYMODE_BIDIR);
 }
 
@@ -49,7 +56,7 @@ void JetMan::Game::initGame() {
 */
 int JetMan::Game::loop() {
 	al_draw_bitmap(imageManager.getImage(JetMan::Utils::ImageManager::BACKGROUND), 0, 0, NULL);
-	root.draw();
+	mainMenu.draw();
 	al_flip_display();
 
 	ALLEGRO_EVENT nextEvent;

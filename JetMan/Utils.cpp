@@ -10,7 +10,7 @@
  */
 JetMan::Utils::SoundManager::SoundManager() {
 	al_reserve_samples(1);
-	introTrack = al_load_sample("Mission Impossible.wav");
+	introTrack = al_load_sample("assets/sounds/Mission Impossible.wav");
 }
 
 /*
@@ -34,7 +34,7 @@ void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTr
  * Initialises the image manager and loads all the resources.
  */
 JetMan::Utils::ImageManager::ImageManager() {
-	background = al_load_bitmap("background.png");
+	background = al_load_bitmap("assets/images/background.png");
 }
 
 /*

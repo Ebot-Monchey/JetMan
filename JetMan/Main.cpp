@@ -6,6 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 #include "game.h"
 
 void initAllegro() {
@@ -23,6 +24,9 @@ void initAllegro() {
 		init = false;
 	}
 	if (!al_init_image_addon()) {
+		init = false;
+	}
+	if (!al_init_primitives_addon()) {
 		init = false;
 	}
 	al_init_font_addon();

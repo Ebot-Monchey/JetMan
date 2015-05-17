@@ -33,8 +33,9 @@ namespace JetMan {
 		JetMan::Utils::ImageManager imageManager;				// The image manager.
 		ALLEGRO_FONT* bigFont;					// Font for the title of the game.
 		ALLEGRO_FONT* normalFont;				// Font used for everything else.
-		JetMan::Graphics::Panel root;			// The root of all the widgets.
+		JetMan::Graphics::Panel mainMenu;		// The main menu screen.
 		JetMan::Graphics::Label* title;			// The title of the game.
+		JetMan::Graphics::Button* play;			// The play button.
 		/*
 		 * Initialises the game components.
 		 */

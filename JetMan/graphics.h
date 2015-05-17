@@ -49,6 +49,10 @@ namespace JetMan {
 			 */
 			virtual void onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
 			/*
+			 * Called when the mouse moves out of this component.
+			 */
+			virtual void onMouseOut() = 0;
+			/*
 			 * Called when the mouse clicks the widget.
 			 */
 			virtual void onClick(JetMan::Utils::Rectangle mouse) = 0;
@@ -76,6 +80,10 @@ namespace JetMan {
 			 */
 			void onMouseOver(JetMan::Utils::Rectangle mouse);
 			/*
+			 * Called when the mouse moves out of this component.
+			 */
+			void onMouseOut();
+			/*
 			 * Called when the mouse clicks the widget.
 			 */
 			void onClick(JetMan::Utils::Rectangle mouse);
@@ -91,7 +99,7 @@ namespace JetMan {
 			/*
 			 * Creates a new label with the given text and font.
 			 */
-			Label(std::string l, ALLEGRO_FONT* f) : label(l), font(f), colour(al_map_rgb(0, 0, 0)) {}
+			Label(std::string l, ALLEGRO_FONT* f);
 			/*
 			 * Changes the text of the label.
 			 */
@@ -109,6 +117,41 @@ namespace JetMan {
 			 */
 			void onMouseOver(JetMan::Utils::Rectangle mouse) {}
 			/*
+			 * Do nothing on mouse out.
+			 */
+			void onMouseOut() {}
+			/*
+			 * Do nothing on mouse click.
+			 */
+			void onClick(JetMan::Utils::Rectangle mouse) {}
+			/*
+			 * Draws the text.
+			 */
+			void draw();
+		protected:
+			std::string label;			// The label's text.
+			ALLEGRO_FONT* font;			// The font to be used.
+			ALLEGRO_COLOR colour;		// The colour for the text.
+		};
+
+		/*
+		 * Button that can be pressed.
+		 */
+		class Button : public Label {
+		public:
+			/*
+			 * Creates a new button woth the given text and font
+			 */
+			Button(std::string l, ALLEGRO_FONT* f);
+			/*
+			 * Change background colour.
+			 */
+			void onMouseOver(JetMan::Utils::Rectangle mouse);
+			/*
+			 * Change background colour.
+			 */
+			void onMouseOut();
+			/*
 			 * Do nothing on mouse click.
 			 */
 			void onClick(JetMan::Utils::Rectangle mouse) {}
@@ -117,9 +160,9 @@ namespace JetMan {
 			 */
 			void draw();
 		private:
-			std::string label;			// The label's text.
-			ALLEGRO_FONT* font;			// The font to be used.
-			ALLEGRO_COLOR colour;		// The colour for the text.
+			ALLEGRO_COLOR normalBack;		// The colour for the text.
+			ALLEGRO_COLOR hoverBack;		// The colour for the text.
+			bool hover;						// Whether the mouse is hovering over it or not.
 		};
 	}
 }
