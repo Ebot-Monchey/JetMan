@@ -168,6 +168,49 @@ namespace JetMan {
 			ALLEGRO_COLOR hoverBack;		// The colour for the text.
 			bool hover;						// Whether the mouse is hovering over it or not.
 		};
+
+		/*
+		 * Represents an object to be moved around the screen.
+		 */
+		class Sprite : public Displayable {
+		public:
+			/*
+			 * Sets the velocity of the sprite.
+			 */
+			void setVelocity(float dx, float dy);
+			/*
+			 * Gets the horizontal velocity.
+			 */
+			float getVelocityX();
+			/*
+			 * Sets the horizontal velocity.
+			 */
+			void setVelocityX(float dx);
+			/*
+			 * Gets the vertical velocity.
+			 */
+			float getVelocityY();
+			/*
+			 * Sets the vertical velocity.
+			 */
+			void setVelocityY(float dy);
+			/*
+			 * Updates the position of the sprite based on its velocity. Calls update state for other user updates.
+			 */
+			void update();
+			/*
+			 * Other updates should be performed here.
+			 */
+			virtual void updateState();
+			/*
+			 * Sets the image of the sprite.
+			 */
+			void setImage(ALLEGRO_BITMAP* image);
+		protected:
+			float dx = 0;					// The horizontal velocity
+			float dy = 0;					// The vertical velocity
+			ALLEGRO_BITMAP* image;			// The sprite's image
+		};
 	}
 }
 
