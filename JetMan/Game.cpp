@@ -21,6 +21,7 @@ JetMan::Game::Game() {
 JetMan::Game::~Game() {
 	al_destroy_display(gameWindow);
 	al_destroy_event_queue(eventQueue);
+	al_destroy_event_queue(timerQueue);
 	al_destroy_timer(timer);
 	al_destroy_font(bigFont);
 	al_destroy_font(normalFont);
@@ -36,10 +37,11 @@ JetMan::Game::~Game() {
 void JetMan::Game::initGame() {
 	gameWindow = al_create_display(800, 600);
 	eventQueue = al_create_event_queue();
+	timerQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_display_event_source(gameWindow));
 	al_set_window_title(gameWindow, "JetMan");
-	timer = al_create_timer(1 / ((double)30));
-	al_register_event_source(eventQueue, al_get_timer_event_source(timer));
+	timer = al_create_timer(1 / ((double)60));
+	al_register_event_source(timerQueue, al_get_timer_event_source(timer));
 	al_register_event_source(eventQueue, al_get_mouse_event_source());
 
 	
@@ -76,37 +78,41 @@ void JetMan::Game::initGame() {
 int JetMan::Game::loop() {
 	ALLEGRO_EVENT nextEvent;
 	int nUpdates = 0;
+	bool hasNext;
 	while (shouldRun) {
-		al_wait_for_event(eventQueue, &nextEvent);
-		if (nextEvent.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-			shouldRun = false;
-		}
-		else if (nextEvent.type == ALLEGRO_EVENT_TIMER) {
-			// Update game here and display
-			nUpdates++;
-		}
-		else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_AXES) {
-			JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
-			if (lastHover != nullptr) {
-				if (!lastHover->getBounds().intersects(mouse)) {
-					lastHover->onMouseOut();
-					lastHover = currDisplay->onMouseOver(mouse);
+		hasNext = al_get_next_event(eventQueue, &nextEvent);
+		if (hasNext) {
+			if (nextEvent.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+				shouldRun = false;
+			}
+			else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_AXES) {
+				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
+				if (lastHover != nullptr) {
+					if (!lastHover->getBounds().intersects(mouse)) {
+						lastHover->onMouseOut();
+						lastHover = currDisplay->onMouseOver(mouse);
+					}
+					else {
+						lastHover = lastHover->onMouseOver(mouse);
+					}
 				}
 				else {
-					lastHover = lastHover->onMouseOver(mouse);
+					lastHover = currDisplay->onMouseOver(mouse);
 				}
 			}
-			else {
-				lastHover = currDisplay->onMouseOver(mouse);
+			else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
+				currDisplay->onMouseClick(mouse);
 			}
 		}
-		else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-			JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
-			currDisplay->onMouseClick(mouse);
+		hasNext = al_get_next_event(timerQueue, &nextEvent);
+		if (hasNext) {
+			// Timer event - Update game here
+			nUpdates++;
 		}
 
-		if (nUpdates == 5) {
-			// Display at 6 fps
+		if (nUpdates == 10) {
+			// Display at 30 fps
 			nUpdates = 0;
 			display();
 		}

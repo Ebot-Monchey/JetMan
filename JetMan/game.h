@@ -70,7 +70,8 @@ namespace JetMan {
 		};
 
 		ALLEGRO_DISPLAY *gameWindow;			// The main window for outputting graphics.
-		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events.
+		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events except the timer.
+		ALLEGRO_EVENT_QUEUE *timerQueue;		// The queue for the timer events so that they don't starve handling of the other events.
 		JetMan::Utils::SoundManager soundManager;				// The sound manager.
 		JetMan::Utils::ImageManager imageManager;				// The image manager.
 		ALLEGRO_TIMER* timer;					// Timer for updating at 60Fps.
