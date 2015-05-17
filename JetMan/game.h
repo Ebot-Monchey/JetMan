@@ -27,19 +27,43 @@ namespace JetMan {
 		 */
 		int loop();
 	private:
+		/*
+		 * Helper class for buttons.
+		 */
+		class PlayButton : public JetMan::Graphics::Button {
+		public:
+			PlayButton(Game* g);
+			/*
+			 * Implements the play button being clicked.
+			 */
+			void onClick();
+		private:
+			Game* game;
+		};
+
 		ALLEGRO_DISPLAY *gameWindow;			// The main window for outputting graphics.
 		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events.
 		JetMan::Utils::SoundManager soundManager;				// The sound manager.
 		JetMan::Utils::ImageManager imageManager;				// The image manager.
+		ALLEGRO_TIMER* timer;					// Timer for updating at 60Fps.
+		bool shouldRun;							// Whether the game should run or not.
+
+		JetMan::Graphics::Panel *currDisplay;	// The current display.
 		ALLEGRO_FONT* bigFont;					// Font for the title of the game.
 		ALLEGRO_FONT* normalFont;				// Font used for everything else.
 		JetMan::Graphics::Panel mainMenu;		// The main menu screen.
 		JetMan::Graphics::Label* title;			// The title of the game.
-		JetMan::Graphics::Button* play;			// The play button.
+		PlayButton* play;						// The play button.
+
+		JetMan::Graphics::Widget* lastHover;	// The last widget the mouse hovered over.
 		/*
 		 * Initialises the game components.
 		 */
 		void initGame();
+		/*
+		 * Display graphics.
+		 */
+		void display();
 	};
 }
 

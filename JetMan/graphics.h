@@ -47,7 +47,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
-			virtual void onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
+			virtual Widget* onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
 			/*
 			 * Called when the mouse moves out of this component.
 			 */
@@ -55,7 +55,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse clicks the widget.
 			 */
-			virtual void onClick(JetMan::Utils::Rectangle mouse) = 0;
+			virtual void onMouseClick(JetMan::Utils::Rectangle mouse) = 0;
 		};
 
 		/*
@@ -78,15 +78,15 @@ namespace JetMan {
 			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
-			void onMouseOver(JetMan::Utils::Rectangle mouse);
+			Widget* onMouseOver(JetMan::Utils::Rectangle mouse);
+			/*
+			 * Do nothing on mouse click.
+			 */
+			void onMouseClick(JetMan::Utils::Rectangle mouse);
 			/*
 			 * Called when the mouse moves out of this component.
 			 */
 			void onMouseOut();
-			/*
-			 * Called when the mouse clicks the widget.
-			 */
-			void onClick(JetMan::Utils::Rectangle mouse);
 		private:
 			std::vector<Widget*> widgets;			// The widgets on the panel.
 		};
@@ -115,15 +115,15 @@ namespace JetMan {
 			/*
 			 * Do nothing on mouse over.
 			 */
-			void onMouseOver(JetMan::Utils::Rectangle mouse) {}
+			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			/*
+			 * Do nothing on mouse click.
+			 */
+			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
 			/*
 			 * Do nothing on mouse out.
 			 */
 			void onMouseOut() {}
-			/*
-			 * Do nothing on mouse click.
-			 */
-			void onClick(JetMan::Utils::Rectangle mouse) {}
 			/*
 			 * Draws the text.
 			 */
@@ -146,15 +146,19 @@ namespace JetMan {
 			/*
 			 * Change background colour.
 			 */
-			void onMouseOver(JetMan::Utils::Rectangle mouse);
+			Widget* onMouseOver(JetMan::Utils::Rectangle mouse);
+			/*
+			 * Do nothing on mouse click.
+			 */
+			void onMouseClick(JetMan::Utils::Rectangle mouse) { onClick(); }
 			/*
 			 * Change background colour.
 			 */
 			void onMouseOut();
 			/*
-			 * Do nothing on mouse click.
+			 * To be overridden to perform button click action.
 			 */
-			void onClick(JetMan::Utils::Rectangle mouse) {}
+			virtual void onClick() {}
 			/*
 			 * Draws the text.
 			 */

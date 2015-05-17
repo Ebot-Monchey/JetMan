@@ -29,6 +29,9 @@ void initAllegro() {
 	if (!al_init_primitives_addon()) {
 		init = false;
 	}
+	if (!al_install_mouse()) {
+		init = false;
+	}
 	al_init_font_addon();
 	al_init_ttf_addon();
 	if (!init) {

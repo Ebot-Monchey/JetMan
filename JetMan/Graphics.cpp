@@ -48,22 +48,22 @@ void JetMan::Graphics::Panel::draw() {
 /*
  * Called when the mouse is hovering over the widget.
  */
-void JetMan::Graphics::Panel::onMouseOver(JetMan::Utils::Rectangle mouse) {
+JetMan::Graphics::Widget* JetMan::Graphics::Panel::onMouseOver(JetMan::Utils::Rectangle mouse) {
 	for (Widget* w : widgets) {
 		if (w->getBounds().intersects(mouse)) {
-			w->onMouseOver(mouse);
-			break;
+			return w->onMouseOver(mouse);
 		}
 	}
+	return nullptr;
 }
 
 /*
  * Called when the mouse is hovering over the widget.
  */
-void JetMan::Graphics::Panel::onClick(JetMan::Utils::Rectangle mouse) {
+void JetMan::Graphics::Panel::onMouseClick(JetMan::Utils::Rectangle mouse) {
 	for (Widget* w : widgets) {
 		if (w->getBounds().intersects(mouse)) {
-			w->onClick(mouse);
+			w->onMouseClick(mouse);
 			break;
 		}
 	}
@@ -140,8 +140,9 @@ JetMan::Graphics::Button::Button(std::string l, ALLEGRO_FONT* f) : Label(l, f), 
 /*
  * Change background colour.
  */
-void JetMan::Graphics::Button::onMouseOver(JetMan::Utils::Rectangle mouse) {
+JetMan::Graphics::Widget* JetMan::Graphics::Button::onMouseOver(JetMan::Utils::Rectangle mouse) {
 	hover = true;
+	return this;
 }
 
 /*
