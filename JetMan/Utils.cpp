@@ -25,7 +25,7 @@ JetMan::Utils::SoundManager::~SoundManager() {
  */
 void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTrack sound, ALLEGRO_PLAYMODE mode) {
 	if (sound == INTRO) {
-		al_play_sample(introTrack, 0.4, 0.0, 1.0, mode, NULL);
+		al_play_sample(introTrack, 1.0, 0.0, 1.0, mode, NULL);
 	}
 }
 

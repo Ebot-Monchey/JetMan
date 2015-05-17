@@ -4,7 +4,9 @@
 #define GAME_H
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
 #include "utils.h"
+#include "graphics.h"
 
 namespace JetMan {
 	/*
@@ -29,7 +31,10 @@ namespace JetMan {
 		ALLEGRO_EVENT_QUEUE *eventQueue;		// The queue that holds all the events.
 		JetMan::Utils::SoundManager soundManager;				// The sound manager.
 		JetMan::Utils::ImageManager imageManager;				// The image manager.
-
+		ALLEGRO_FONT* bigFont;					// Font for the title of the game.
+		ALLEGRO_FONT* normalFont;				// Font used for everything else.
+		JetMan::Graphics::Panel root;			// The root of all the widgets.
+		JetMan::Graphics::Label* title;			// The title of the game.
 		/*
 		 * Initialises the game components.
 		 */

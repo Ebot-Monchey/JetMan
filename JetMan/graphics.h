@@ -41,6 +41,10 @@ namespace JetMan {
 		class Widget : public Displayable {
 		public:
 			/*
+			 * Draws the displayable object to the screen.
+			 */
+			virtual void draw() = 0;
+			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
 			virtual void onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
@@ -96,6 +100,18 @@ namespace JetMan {
 			 * Sets the colour of the label.
 			 */
 			void setColour(ALLEGRO_COLOR colour);
+			/*
+			 * Sets the position to be drawn to.
+			 */
+			void setPosition(float x, float y);
+			/*
+			 * Do nothing on mouse over.
+			 */
+			void onMouseOver(JetMan::Utils::Rectangle mouse) {}
+			/*
+			 * Do nothing on mouse click.
+			 */
+			void onClick(JetMan::Utils::Rectangle mouse) {}
 			/*
 			 * Draws the text.
 			 */
