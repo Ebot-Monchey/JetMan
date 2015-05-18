@@ -215,12 +215,24 @@ namespace JetMan {
 		/*
 		 * Represents an object to be moved around the screen.
 		 */
-		class Sprite : public Displayable {
+		class Sprite : public Widget {
 		public:
 			/*
 			 * Creates a new sprite with the given image.
 			 */
 			Sprite(ALLEGRO_BITMAP* image);
+			/*
+			 * Called when the mouse is hovering over the widget.
+			 */
+			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			/*
+			 * Called when the mouse moves out of this component.
+			 */
+			void onMouseOut() {}
+			/*
+			 * Called when the mouse clicks the widget.
+			 */
+			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
 			/*
 			 * Sets the velocity of the sprite.
 			 */

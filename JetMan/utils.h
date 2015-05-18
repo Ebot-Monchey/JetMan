@@ -57,13 +57,15 @@ namespace JetMan {
 			/*
 			 * The different images available.
 			 */
-			enum Image { BACKGROUND, JETMAN};
+			enum Image { BACKGROUND, JETMAN, WALL};
 			/*
 			 * Retrieves the Bitmap linked to the Image enum.
 			 */
 			ALLEGRO_BITMAP* getImage(Image image);
 		private:
 			ALLEGRO_BITMAP* background;
+			ALLEGRO_BITMAP* jetMan;
+			ALLEGRO_BITMAP* wall;
 		};
 
 		/*

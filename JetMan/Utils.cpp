@@ -52,6 +52,8 @@ void JetMan::Utils::SoundManager::stopSound(JetMan::Utils::SoundManager::SoundTr
  */
 JetMan::Utils::ImageManager::ImageManager() {
 	background = al_load_bitmap("assets/images/background.png");
+	jetMan = al_load_bitmap("assets/images/jetman.png");
+	wall = al_load_bitmap("assets/images/wall.png");
 }
 
 /*
@@ -59,6 +61,8 @@ JetMan::Utils::ImageManager::ImageManager() {
  */
 JetMan::Utils::ImageManager::~ImageManager() {
 	al_destroy_bitmap(background);
+	al_destroy_bitmap(jetMan);
+	al_destroy_bitmap(wall);
 }
 
 /*
@@ -68,6 +72,12 @@ ALLEGRO_BITMAP* JetMan::Utils::ImageManager::getImage(JetMan::Utils::ImageManage
 	switch (image) {
 	case BACKGROUND:
 		return background;
+		break;
+	case JETMAN:
+		return jetMan;
+		break;
+	case WALL:
+		return wall;
 		break;
 	default:
 		return NULL;
