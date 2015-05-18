@@ -335,7 +335,7 @@ JetMan::Graphics::Wall::~Wall() {
  * Updates the position of the gap by generating a random number between 1 and 3.
  */
 void JetMan::Graphics::Wall::updateGap() {
-	gapPosition = (rand() % 3) + 1;
+	gapPosition = (rand() % 4) + 0;
 	updateWalls();
 }
 

@@ -79,15 +79,15 @@ void JetMan::Game::initGame() {
 	gameCanvas.addWidget(jetMan);
 	wall1 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 1);
 	wall1->setPosition(480, 100);
-	wall1->setVelocityX(-100);
+	wall1->setVelocityX(-130);
 	gameScreen.addWidget(wall1);
 	wall2 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 2);
 	wall2->setPosition(960, 100);
-	wall2->setVelocityX(-100);
+	wall2->setVelocityX(-130);
 	gameScreen.addWidget(wall2);
 	wall3 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 3);
 	wall3->setPosition(1440, 100);
-	wall3->setVelocityX(-100);
+	wall3->setVelocityX(-130);
 	gameScreen.addWidget(wall3);
 	gameScreen.addWidget(&gameCanvas);
 
@@ -213,12 +213,14 @@ int JetMan::Game::loop() {
 				}
 
 				if (jetManBounds.getY() > 600 - jetManBounds.getHeight()) {
+					// Crashed down.
 					state = JetMan::Graphics::InformationBox::OVER;
 					info->setState(state);
 					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
 					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
 				}
 				else if ((wall1->collides(jetManBounds)) || (wall2->collides(jetManBounds)) || (wall3->collides(jetManBounds))) {
+					// Collided with a wall.
 					state = JetMan::Graphics::InformationBox::OVER;
 					info->setState(state);
 					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
