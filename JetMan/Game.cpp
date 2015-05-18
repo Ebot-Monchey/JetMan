@@ -29,6 +29,7 @@ JetMan::Game::~Game() {
 	delete(play);
 	delete(demo);
 	delete(quit);
+	delete(info);
 }
 
 /*

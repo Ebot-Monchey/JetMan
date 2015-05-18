@@ -258,6 +258,23 @@ namespace JetMan {
 			float dy = 0;					// The vertical velocity
 			ALLEGRO_BITMAP* image;			// The sprite's image
 		};
+
+		/*
+		 * Represents the JetMan character.
+		 */
+		class JetManSprite : public Sprite {
+		public:
+			/*
+			 * Creates the JetMan sprite.
+			 */
+			JetManSprite(ALLEGRO_BITMAP *j);
+			/*
+			 * Updates JetMan's velocity by applying gravity.
+			 */
+			void update(float delta);
+		private:
+			ALLEGRO_BITMAP *jetMan;			// The player image.
+		};
 	}
 }
 

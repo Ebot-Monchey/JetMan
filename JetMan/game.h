@@ -89,6 +89,7 @@ namespace JetMan {
 
 		JetMan::Graphics::Panel gameScreen;		// The game screen.
 		JetMan::Graphics::InformationBox* info;	// The information display at the top of the game screen.
+		JetMan::Graphics::Panel gameCanvas;		// The canvase to draw JetMan and the obstacles on.
 
 		JetMan::Graphics::Widget* lastHover;	// The last widget the mouse hovered over.
 		JetMan::Graphics::InformationBox::State state;	// The state of the game

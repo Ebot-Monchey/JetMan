@@ -5,7 +5,6 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
-#include <unordered_map>
 
 namespace JetMan {
 	namespace Utils {
@@ -40,7 +39,6 @@ namespace JetMan {
 			ALLEGRO_SAMPLE_ID sadPianoId;
 			ALLEGRO_SAMPLE *missionImpossible;
 			ALLEGRO_SAMPLE_ID missionImpossibleId;
-			std::unordered_map<SoundTrack, ALLEGRO_SAMPLE_ID*> trackIds;
 		};
 
 		/*
