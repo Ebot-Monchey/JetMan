@@ -25,11 +25,14 @@ JetMan::Game::~Game() {
 	al_destroy_timer(timer);
 	al_destroy_font(bigFont);
 	al_destroy_font(normalFont);
-	delete(title);
-	delete(play);
-	delete(demo);
-	delete(quit);
-	delete(info);
+	delete title;
+	delete play;
+	delete demo;
+	delete quit;
+	delete info;
+	delete jetMan;
+	delete wall1;
+	delete wall2;
 }
 
 /*
@@ -74,11 +77,27 @@ void JetMan::Game::initGame() {
 	jetMan = new JetMan::Graphics::JetManSprite(imageManager.getImage(JetMan::Utils::ImageManager::JETMAN));
 	jetMan->setPosition(50, 250);
 	gameCanvas.addWidget(jetMan);
+	wall1 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 1);
+	wall1->setPosition(480, 100);
+	wall1->setVelocityX(-100);
+	gameScreen.addWidget(wall1);
+	wall2 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 2);
+	wall2->setPosition(960, 100);
+	wall2->setVelocityX(-100);
+	gameScreen.addWidget(wall2);
+	wall3 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 3);
+	wall3->setPosition(1440, 100);
+	wall3->setVelocityX(-100);
+	gameScreen.addWidget(wall3);
 	gameScreen.addWidget(&gameCanvas);
+
+	front = wall1;
+	back = wall3;
 
 	soundManager.playSound(JetMan::Utils::SoundManager::SAD_PIANO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 	state = JetMan::Graphics::InformationBox::OVER;
 
+	score = 0;
 	lastHover = nullptr;
 	shouldRun = true;
 	currDisplay = &mainMenu;
@@ -182,6 +201,10 @@ int JetMan::Game::loop() {
 			// Timer event - Update game here
 			if (state != JetMan::Graphics::InformationBox::PAUSED && state != JetMan::Graphics::InformationBox::OVER) {
 				jetMan->update(FPSIncrement);
+				wall1->update(FPSIncrement);
+				wall2->update(FPSIncrement);
+				wall3->update(FPSIncrement);
+
 				JetMan::Utils::Rectangle jetManBounds = jetMan->getBounds();
 				if (jetManBounds.getY() < 100) {
 					jetManBounds.setY(100);
@@ -193,13 +216,40 @@ int JetMan::Game::loop() {
 					state = JetMan::Graphics::InformationBox::OVER;
 					info->setState(state);
 					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+				}
+				else if ((wall1->collides(jetManBounds)) || (wall2->collides(jetManBounds)) || (wall3->collides(jetManBounds))) {
+					state = JetMan::Graphics::InformationBox::OVER;
+					info->setState(state);
+					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+				}
+				else {
+					JetMan::Utils::Rectangle* w1 = &front->getBounds();
+					if (w1->getX() < -w1->getWidth()) {
+						score++;
+						info->updateScore(score);
+						w1->setX(back->getBounds().getX() + 3 * w1->getWidth());
+						front->setBounds(*w1);
+						front->updateGap();
+						back = front;
+						if (front == wall1) {
+							front = wall2;
+						}
+						else if (front == wall2) {
+							front = wall3;
+						}
+						else {
+							front = wall1;
+						}
+					}
 				}
 			}
 			nUpdates++;
 		}
 
 		if (nUpdates == 10) {
-			// Display at 30 fps
+			// Don't display all the time.
 			nUpdates = 0;
 			display();
 		}
@@ -248,5 +298,11 @@ void JetMan::Game::reset() {
 	info->setState(state);
 	jetMan->setPosition(50, 250);
 	jetMan->setVelocityY(0);
-	info->updateScore(0);
+	score = 0;
+	info->updateScore(score);
+	wall1->setPosition(480, 100);
+	wall2->setPosition(960, 100);
+	wall3->setPosition(1440, 100);
+	front = wall1;
+	back = wall3;
 }

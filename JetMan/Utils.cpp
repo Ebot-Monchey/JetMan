@@ -9,9 +9,10 @@
  * Initilaises the sound manager and loads all the resources.
  */
 JetMan::Utils::SoundManager::SoundManager() {
-	al_reserve_samples(1);
-	sadPiano = al_load_sample("assets/sounds/Sad Piano.wav");
-	missionImpossible = al_load_sample("assets/sounds/Mission Impossible.wav");
+	al_reserve_samples(2);
+	sadPiano = al_load_sample("assets/sounds/Sad Piano.ogg");
+	missionImpossible = al_load_sample("assets/sounds/Mission Impossible.ogg");
+	crash = al_load_sample("assets/sounds/crash.wav");
 }
 
 /*
@@ -20,6 +21,7 @@ JetMan::Utils::SoundManager::SoundManager() {
 JetMan::Utils::SoundManager::~SoundManager() {
 	al_destroy_sample(sadPiano);
 	al_destroy_sample(missionImpossible);
+	al_destroy_sample(crash);
 }
 
 /*
@@ -32,6 +34,9 @@ void JetMan::Utils::SoundManager::playSound(JetMan::Utils::SoundManager::SoundTr
 	else if (sound == MISSION_IMPOSSIBLE) {
 		al_play_sample(missionImpossible, volume, 0.0, 1.0, mode, &missionImpossibleId);
 	}
+	else if (sound == CRASH) {
+		al_play_sample(crash, volume, 0.0, 1.0, mode, &crashId);
+	}
 }
 
 /*
@@ -43,6 +48,9 @@ void JetMan::Utils::SoundManager::stopSound(JetMan::Utils::SoundManager::SoundTr
 	}
 	else if (sound == MISSION_IMPOSSIBLE) {
 		al_stop_sample(&missionImpossibleId);
+	}
+	else if (sound == CRASH) {
+		al_stop_sample(&crashId);
 	}
 }
 

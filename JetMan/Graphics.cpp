@@ -1,6 +1,7 @@
 // Implements the classes found in graphics.h
 
 #include <string>
+#include <stdlib.h>
 #include <allegro5/allegro_primitives.h>
 #include "graphics.h"
 #include "utils.h"
@@ -305,4 +306,93 @@ void JetMan::Graphics::JetManSprite::update(float delta) {
 		dy = 200;
 	}
 	JetMan::Graphics::Sprite::update(delta);
+}
+
+// ======================Wall======================================
+/*
+ * Creates a new wall sprite.
+ */
+JetMan::Graphics::Wall::Wall(ALLEGRO_BITMAP* w, int gapPosition) : Sprite(w) {
+	srand(time(NULL));
+	this->gapPosition = gapPosition;
+	JetMan::Utils::Rectangle bounds = getBounds();
+	for (int i = 0; i < 4; i++) {
+		walls[i] = new JetMan::Utils::Rectangle(0, 0, bounds.getWidth(), bounds.getHeight());
+	}
+	updateWalls();
+}
+
+/*
+ * Frees allocated memory.
+ */
+JetMan::Graphics::Wall::~Wall() {
+	for (int i = 0; i < 4; i++) {
+		delete walls[i];
+	}
+}
+
+/*
+ * Updates the position of the gap by generating a random number between 1 and 3.
+ */
+void JetMan::Graphics::Wall::updateGap() {
+	gapPosition = (rand() % 3) + 1;
+	updateWalls();
+}
+
+/*
+ * Updates the bounds of the wall rectangles.
+ */
+void JetMan::Graphics::Wall::updateWalls() {
+	JetMan::Utils::Rectangle mainWall = getBounds();
+	JetMan::Utils::Rectangle* wallBounds;
+
+	int pos = 0;
+	for (int i = 0; i < 5; i++) {
+		if (gapPosition == i) {
+			continue;
+		}
+		else {
+			wallBounds = walls[pos];
+			wallBounds->setX(mainWall.getX());
+			wallBounds->setY(100 + 100 * i);
+			pos++;
+		}
+	}
+}
+
+/*
+ * Checks whether the rectangle collides with the wall.
+ */
+bool JetMan::Graphics::Wall::collides(JetMan::Utils::Rectangle rect) {
+	for (JetMan::Utils::Rectangle*wall : walls) {
+		if (wall->intersects(rect)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/*
+ * Updates the wall and each wall segments bounds.
+ */
+void JetMan::Graphics::Wall::update(float delta) {
+	JetMan::Graphics::Sprite::update(delta);
+	updateWalls();
+}
+
+/*
+ * Draws the wall with the gap.
+ */
+void JetMan::Graphics::Wall::draw() {
+	for (JetMan::Utils::Rectangle*wall : walls) {
+		al_draw_bitmap(image, wall->getX(), wall->getY(), NULL);
+	}
+}
+
+/*
+ * Need to update the wall bounds when the position is changed.
+ */
+void JetMan::Graphics::Wall::setPosition(float x, float y) {
+	JetMan::Graphics::Sprite::setPosition(x, y);
+	updateWalls();
 }

@@ -95,6 +95,14 @@ namespace JetMan {
 		JetMan::Graphics::Widget* lastHover;	// The last widget the mouse hovered over.
 		JetMan::Graphics::InformationBox::State state;	// The state of the game
 		JetMan::Graphics::JetManSprite* jetMan;	// The main character.
+		JetMan::Graphics::Wall* wall1;			// The first wall.
+		JetMan::Graphics::Wall* wall2;			// The second wall
+		JetMan::Graphics::Wall* wall3;			// The second wall
+		JetMan::Graphics::Wall* front;			// The wall that is in front
+		JetMan::Graphics::Wall* back;			// The wall that is at the very back
+
+		int score;								// The player's score.
+
 		/*
 		 * Initialises the game components.
 		 */

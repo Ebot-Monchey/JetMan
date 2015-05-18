@@ -4,6 +4,7 @@
 #define GRAPHICS_H
 
 #include <vector>
+#include <stdlib.h>
 #include <string>
 #include <allegro5/allegro_font.h>
 #include "utils.h"
@@ -285,7 +286,55 @@ namespace JetMan {
 			 */
 			void update(float delta);
 		private:
-			const float gravity = 150;			// Decrease velocity by 50 pixels per second
+			const float gravity = 190;			// gravity value - tweak for preferrence
+		};
+
+		/*
+		 * Represents the wall sprite.
+		 */
+		class Wall : public Sprite {
+		public:
+			/*
+			 * Creates a new wall sprite.
+			 */
+			Wall(ALLEGRO_BITMAP* w, int gapPosition);
+			/*
+			 * Frees allocated memory.
+			 */
+			~Wall();
+			/*
+			 * Updates the wall and each wall segments bounds.
+			 */
+			void update(float delta);
+			/*
+			 * Randomly chooses the position of the hole.
+			 */
+			void updateGap();
+			/*
+			 * Checks whether the rectangle collides with the wall.
+			 */
+			bool collides(JetMan::Utils::Rectangle rect);
+			/*
+			 * Draws the wall with the gap.
+			 */
+			void draw();
+			/*
+			 * Need to update the wall bounds when the position is changed.
+			 */
+			void setPosition(float x, float y);
+		private:
+			/*
+			 * blocks 1-3 from the top can be a gap.
+			 */
+			int gapPosition;
+			/*
+			 * The rectangles represeting the walls.
+			 */
+			JetMan::Utils::Rectangle* walls[4];
+			/*
+			 * Updates the bounds of the wall rectangles.
+			 */
+			void updateWalls();
 		};
 	}
 }

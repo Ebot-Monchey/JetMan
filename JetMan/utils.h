@@ -24,7 +24,7 @@ namespace JetMan {
 			/*
 			 * The different sounds that can be played.
 			 */
-			enum SoundTrack { SAD_PIANO, MISSION_IMPOSSIBLE };
+			enum SoundTrack { SAD_PIANO, MISSION_IMPOSSIBLE, CRASH };
 
 			/*
 			 * Plays a sound in the given playback mode.
@@ -39,6 +39,8 @@ namespace JetMan {
 			ALLEGRO_SAMPLE_ID sadPianoId;
 			ALLEGRO_SAMPLE *missionImpossible;
 			ALLEGRO_SAMPLE_ID missionImpossibleId;
+			ALLEGRO_SAMPLE *crash;
+			ALLEGRO_SAMPLE_ID crashId;
 		};
 
 		/*
