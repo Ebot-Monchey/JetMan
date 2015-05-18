@@ -294,3 +294,12 @@ void JetMan::Graphics::InformationBox::draw() {
 		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to restart]");
 	}
 }
+
+// =======================JetManSprite==================================
+/*
+ * Updates JetMan's velocity by applying gravity.
+ */
+void JetMan::Graphics::JetManSprite::update(float delta) {
+	dy += gravity;
+	JetMan::Graphics::Sprite::update(delta);
+}

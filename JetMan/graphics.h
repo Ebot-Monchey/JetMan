@@ -267,13 +267,13 @@ namespace JetMan {
 			/*
 			 * Creates the JetMan sprite.
 			 */
-			JetManSprite(ALLEGRO_BITMAP *j);
+			JetManSprite(ALLEGRO_BITMAP *j) : Sprite(j) {}
 			/*
 			 * Updates JetMan's velocity by applying gravity.
 			 */
 			void update(float delta);
 		private:
-			ALLEGRO_BITMAP *jetMan;			// The player image.
+			const float gravity = -50;			// Decrease velocity by 50 pixels per second
 		};
 	}
 }

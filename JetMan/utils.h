@@ -57,7 +57,7 @@ namespace JetMan {
 			/*
 			 * The different images available.
 			 */
-			enum Image { BACKGROUND };
+			enum Image { BACKGROUND, JETMAN};
 			/*
 			 * Retrieves the Bitmap linked to the Image enum.
 			 */

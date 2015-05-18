@@ -69,6 +69,10 @@ void JetMan::Game::initGame() {
 	gameScreen.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
 	info = new JetMan::Graphics::InformationBox(800, 100, normalFont);
 	gameScreen.addWidget(info);
+	gameCanvas.setBounds(JetMan::Utils::Rectangle(0, 100, 800, 500));
+	gameScreen.addWidget(&gameCanvas);
+	jetMan = new JetMan::Graphics::JetManSprite(imageManager.getImage(JetMan::Utils::ImageManager::JETMAN));
+	jetMan->setPosition(50, 250);
 
 	soundManager.playSound(JetMan::Utils::SoundManager::SAD_PIANO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 	state = JetMan::Graphics::InformationBox::OVER;
