@@ -285,7 +285,7 @@ namespace JetMan {
 			 */
 			void update(float delta);
 		private:
-			const float gravity = -50;			// Decrease velocity by 50 pixels per second
+			const float gravity = 150;			// Decrease velocity by 50 pixels per second
 		};
 	}
 }

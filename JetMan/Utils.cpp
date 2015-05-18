@@ -51,7 +51,7 @@ void JetMan::Utils::SoundManager::stopSound(JetMan::Utils::SoundManager::SoundTr
  * Initialises the image manager and loads all the resources.
  */
 JetMan::Utils::ImageManager::ImageManager() {
-	background = al_load_bitmap("assets/images/background.png");
+	background = al_load_bitmap("assets/images/background.jpg");
 	jetMan = al_load_bitmap("assets/images/jetman.png");
 	wall = al_load_bitmap("assets/images/wall.png");
 }

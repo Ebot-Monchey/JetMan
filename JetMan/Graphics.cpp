@@ -291,7 +291,7 @@ void JetMan::Graphics::InformationBox::draw() {
 		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Pause]");
 	}
 	else {
-		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to Quit and Enter to restart]");
+		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Over! [Press Esc to Quit and Enter to restart]");
 	}
 }
 
@@ -300,6 +300,9 @@ void JetMan::Graphics::InformationBox::draw() {
  * Updates JetMan's velocity by applying gravity.
  */
 void JetMan::Graphics::JetManSprite::update(float delta) {
-	dy += gravity;
+	dy += gravity*delta;
+	if (dy > 200) {
+		dy = 200;
+	}
 	JetMan::Graphics::Sprite::update(delta);
 }

@@ -75,6 +75,7 @@ namespace JetMan {
 		JetMan::Utils::SoundManager soundManager;				// The sound manager.
 		JetMan::Utils::ImageManager imageManager;				// The image manager.
 		ALLEGRO_TIMER* timer;					// Timer for updating at 60Fps.
+		const float FPSIncrement = 1/120.0f;						// Frames per second increment (delta).
 		bool shouldRun;							// Whether the game should run or not.
 
 		JetMan::Graphics::Panel *currDisplay;	// The current display.
@@ -102,6 +103,10 @@ namespace JetMan {
 		 * Display graphics.
 		 */
 		void display();
+		/*
+		 * Resets the game.
+		 */
+		void reset();
 	};
 }
 

@@ -41,7 +41,7 @@ void JetMan::Game::initGame() {
 	timerQueue = al_create_event_queue();
 	al_register_event_source(eventQueue, al_get_display_event_source(gameWindow));
 	al_set_window_title(gameWindow, "JetMan");
-	timer = al_create_timer(1 / ((double)60));
+	timer = al_create_timer(1 / ((double)120));
 	al_register_event_source(timerQueue, al_get_timer_event_source(timer));
 	al_register_event_source(eventQueue, al_get_mouse_event_source());
 	al_register_event_source(eventQueue, al_get_keyboard_event_source());
@@ -92,6 +92,10 @@ int JetMan::Game::loop() {
 	ALLEGRO_EVENT nextEvent;
 	int nUpdates = 0;
 	bool hasNext;
+
+	float spaceStartHold = 0;
+	float spaceLengthHeld = 0;
+
 	while (shouldRun) {
 		hasNext = al_get_next_event(eventQueue, &nextEvent);
 		if (hasNext) {
@@ -116,6 +120,15 @@ int JetMan::Game::loop() {
 			else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
 				currDisplay->onMouseClick(mouse);
+			}
+			else if (nextEvent.type == ALLEGRO_EVENT_KEY_DOWN) {
+				if (nextEvent.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+					if (currDisplay == &(gameScreen)) {
+						if (state == JetMan::Graphics::InformationBox::ACTIVE) {
+							spaceStartHold = al_current_time();
+						}
+					}
+				}
 			}
 			else if (nextEvent.type == ALLEGRO_EVENT_KEY_UP) {
 				if (currDisplay == &(gameScreen)) {
@@ -144,22 +157,49 @@ int JetMan::Game::loop() {
 							soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 							state = JetMan::Graphics::InformationBox::ACTIVE;
 							info->setState(state);
+							reset();
 						}
 					}
 					else if (nextEvent.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-
+						if (currDisplay == &(gameScreen)) {
+							if (state == JetMan::Graphics::InformationBox::ACTIVE) {
+								spaceLengthHeld = al_current_time() - spaceStartHold;
+								if (spaceLengthHeld > 0.2f) {
+									jetMan->setVelocityY(-150);
+								}
+								else {
+									jetMan->setVelocityY(-70);
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+
 		hasNext = al_get_next_event(timerQueue, &nextEvent);
 		if (hasNext) {
 			// Timer event - Update game here
+			if (state != JetMan::Graphics::InformationBox::PAUSED && state != JetMan::Graphics::InformationBox::OVER) {
+				jetMan->update(FPSIncrement);
+				JetMan::Utils::Rectangle jetManBounds = jetMan->getBounds();
+				if (jetManBounds.getY() < 100) {
+					jetManBounds.setY(100);
+					jetMan->setBounds(jetManBounds);
+					jetMan->setVelocityY(0);
+				}
+
+				if (jetManBounds.getY() > 600 - jetManBounds.getHeight()) {
+					state = JetMan::Graphics::InformationBox::OVER;
+					info->setState(state);
+					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+				}
+			}
 			nUpdates++;
 		}
 
 		if (nUpdates == 10) {
-			// Display at 6 fps
+			// Display at 30 fps
 			nUpdates = 0;
 			display();
 		}
@@ -180,12 +220,10 @@ void JetMan::Game::display() {
  * Implements the play button being clicked.
  */
 void JetMan::Game::PlayButton::onClick() {
-	game->state = JetMan::Graphics::InformationBox::ACTIVE;
-	game->info->setState(game->state);
-	game->info->updateScore(0);
 	game->currDisplay = &game->gameScreen;
 	game->soundManager.stopSound(JetMan::Utils::SoundManager::SAD_PIANO);
 	game->soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+	game->reset();
 }
 
 /*
@@ -200,4 +238,15 @@ void JetMan::Game::DemoButton::onClick() {
  */
 void JetMan::Game::QuitButton::onClick() {
 	game->shouldRun = false;
+}
+
+/*
+ * Resets the game.
+ */
+void JetMan::Game::reset() {
+	state = JetMan::Graphics::InformationBox::ACTIVE;
+	info->setState(state);
+	jetMan->setPosition(50, 250);
+	jetMan->setVelocityY(0);
+	info->updateScore(0);
 }
