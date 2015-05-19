@@ -53,7 +53,7 @@ void JetMan::Game::initGame() {
 	bigFont = al_load_ttf_font("assets/fonts/arial.ttf", 72, NULL);
 	normalFont = al_load_ttf_font("assets/fonts/arial.ttf", 20, NULL);
 
-	mainMenu.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
+	mainMenu.setBounds(JetMan::Graphics::Rectangle(0, 0, 800, 600));
 	title = new JetMan::Graphics::Label("JetMan", bigFont);
 	title->setPosition(260, 100);
 	title->setColour(al_map_rgb(7, 70, 70));
@@ -69,10 +69,10 @@ void JetMan::Game::initGame() {
 	quit->setPosition(360, 350);
 	mainMenu.addWidget(quit);
 
-	gameScreen.setBounds(JetMan::Utils::Rectangle(0, 0, 800, 600));
+	gameScreen.setBounds(JetMan::Graphics::Rectangle(0, 0, 800, 600));
 	info = new JetMan::Graphics::InformationBox(800, 100, normalFont);
 	gameScreen.addWidget(info);
-	gameCanvas.setBounds(JetMan::Utils::Rectangle(0, 100, 800, 500));
+	gameCanvas.setBounds(JetMan::Graphics::Rectangle(0, 100, 800, 500));
 	
 	jetMan = new JetMan::Graphics::JetManSprite(imageManager.getImage(JetMan::Utils::ImageManager::JETMAN));
 	jetMan->setPosition(50, 250);
@@ -82,11 +82,11 @@ void JetMan::Game::initGame() {
 	wall1->setVelocityX(-130);
 	gameScreen.addWidget(wall1);
 	wall2 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 2);
-	wall2->setPosition(960, 100);
+	wall2->setPosition(980, 100);
 	wall2->setVelocityX(-130);
 	gameScreen.addWidget(wall2);
 	wall3 = new JetMan::Graphics::Wall(imageManager.getImage(JetMan::Utils::ImageManager::WALL), 3);
-	wall3->setPosition(1440, 100);
+	wall3->setPosition(1460, 100);
 	wall3->setVelocityX(-130);
 	gameScreen.addWidget(wall3);
 	gameScreen.addWidget(&gameCanvas);
@@ -122,7 +122,7 @@ int JetMan::Game::loop() {
 				shouldRun = false;
 			}
 			else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_AXES) {
-				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
+				JetMan::Graphics::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
 				if (lastHover != nullptr) {
 					if (!lastHover->getBounds().intersects(mouse)) {
 						lastHover->onMouseOut();
@@ -137,7 +137,7 @@ int JetMan::Game::loop() {
 				}
 			}
 			else if (nextEvent.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-				JetMan::Utils::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
+				JetMan::Graphics::Rectangle mouse(nextEvent.mouse.x, nextEvent.mouse.y, 2, 2);
 				currDisplay->onMouseClick(mouse);
 			}
 			else if (nextEvent.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -184,7 +184,7 @@ int JetMan::Game::loop() {
 							if (state == JetMan::Graphics::InformationBox::ACTIVE) {
 								spaceLengthHeld = al_current_time() - spaceStartHold;
 								if (spaceLengthHeld > 0.2f) {
-									jetMan->setVelocityY(-150);
+									jetMan->setVelocityY(-180);
 								}
 								else {
 									jetMan->setVelocityY(-70);
@@ -205,7 +205,7 @@ int JetMan::Game::loop() {
 				wall2->update(FPSIncrement);
 				wall3->update(FPSIncrement);
 
-				JetMan::Utils::Rectangle jetManBounds = jetMan->getBounds();
+				JetMan::Graphics::Rectangle jetManBounds = jetMan->getBounds();
 				if (jetManBounds.getY() < 100) {
 					jetManBounds.setY(100);
 					jetMan->setBounds(jetManBounds);
@@ -227,11 +227,11 @@ int JetMan::Game::loop() {
 					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
 				}
 				else {
-					JetMan::Utils::Rectangle* w1 = &front->getBounds();
+					JetMan::Graphics::Rectangle* w1 = &front->getBounds();
 					if (w1->getX() < -w1->getWidth()) {
 						score++;
 						info->updateScore(score);
-						w1->setX(back->getBounds().getX() + 3 * w1->getWidth());
+						w1->setX(back->getBounds().getX() + 3 * w1->getWidth() + 20);
 						front->setBounds(*w1);
 						front->updateGap();
 						back = front;
@@ -303,8 +303,8 @@ void JetMan::Game::reset() {
 	score = 0;
 	info->updateScore(score);
 	wall1->setPosition(480, 100);
-	wall2->setPosition(960, 100);
-	wall3->setPosition(1440, 100);
+	wall2->setPosition(980, 100);
+	wall3->setPosition(1460, 100);
 	front = wall1;
 	back = wall3;
 }

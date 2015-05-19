@@ -12,6 +12,62 @@
 namespace JetMan {
 	namespace Graphics {
 		/*
+		 * Used for representing the bounds of objects.
+		 */
+		class Rectangle {
+		public:
+			/*
+			 * Creates a new rectangle with the given bounds.
+			 */
+			Rectangle(float x, float y, float width, float height);
+			/*
+			 * Gets the x coordinate of the rectangle.
+			 */
+			float getX();
+			/*
+			 * Sets the x coordinate of the rectangle.
+			 */
+			void setX(float x);
+			/*
+			 * Gets the x coordinate of the rectangle.
+			 */
+			float getY();
+			/*
+			 * Sets the y coordinate of the rectangle.
+			 */
+			void setY(float y);
+			/*
+			 * Gets the width of the rectangle.
+			 */
+			float getWidth();
+			/*
+			 * Sets the width of the rectangle.
+			 */
+			void setWidth(float width);
+			/*
+			 * Gets the height of the rectangle.
+			 */
+			float getHeight();
+			/*
+			 * Sets the height of the rectangle.
+			 */
+			void setHeight(float height);
+			/*
+			 * Sets the bounds of the rectangle.
+			 */
+			void setBounds(float x, float y, float width, float height);
+			/*
+			 * Determines whether two rectangles intersect or not.
+			 */
+			bool intersects(Rectangle rect);
+		private:
+			float x;
+			float y;
+			float width;
+			float height;
+		};
+
+		/*
 		 * The base class for all objects that can be displayed on the screen.
 		 */
 		class Displayable {
@@ -19,11 +75,11 @@ namespace JetMan {
 			/*
 			 * Initialises the bounding rectangle.
 			 */
-			Displayable() : bounds(JetMan::Utils::Rectangle(0, 0, 0, 0)) {}
+			Displayable() : bounds(Rectangle(0, 0, 0, 0)) {}
 			/*
 			 * Gets the bounding rectangle of the displayable object.
 			 */
-			JetMan::Utils::Rectangle getBounds();
+			Rectangle getBounds();
 			/*
 			 * Sets the position to be drawn to.
 			 */
@@ -31,13 +87,13 @@ namespace JetMan {
 			/*
 			 * Sets the bounding rectangle of the displayable object.
 			 */
-			void setBounds(JetMan::Utils::Rectangle bounds);
+			void setBounds(Rectangle bounds);
 			/*
 			 * Draws the displayable object to the screen.
 			 */
 			virtual void draw() = 0;
 		private:
-			JetMan::Utils::Rectangle bounds;			// The bounds of the displayable object.
+			Rectangle bounds;			// The bounds of the displayable object.
 		};
 
 		/*
@@ -52,7 +108,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
-			virtual Widget* onMouseOver(JetMan::Utils::Rectangle mouse) = 0;
+			virtual Widget* onMouseOver(Rectangle mouse) = 0;
 			/*
 			 * Called when the mouse moves out of this component.
 			 */
@@ -60,7 +116,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse clicks the widget.
 			 */
-			virtual void onMouseClick(JetMan::Utils::Rectangle mouse) = 0;
+			virtual void onMouseClick(Rectangle mouse) = 0;
 		};
 
 		/*
@@ -83,11 +139,11 @@ namespace JetMan {
 			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
-			Widget* onMouseOver(JetMan::Utils::Rectangle mouse);
+			Widget* onMouseOver(Rectangle mouse);
 			/*
 			 * Do nothing on mouse click.
 			 */
-			void onMouseClick(JetMan::Utils::Rectangle mouse);
+			void onMouseClick(Rectangle mouse);
 			/*
 			 * Called when the mouse moves out of this component.
 			 */
@@ -116,11 +172,11 @@ namespace JetMan {
 			/*
 			 * Do nothing on mouse over.
 			 */
-			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			Widget* onMouseOver(Rectangle mouse) { return nullptr; }
 			/*
 			 * Do nothing on mouse click.
 			 */
-			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
+			void onMouseClick(Rectangle mouse) {}
 			/*
 			 * Do nothing on mouse out.
 			 */
@@ -147,11 +203,11 @@ namespace JetMan {
 			/*
 			 * Change background colour.
 			 */
-			Widget* onMouseOver(JetMan::Utils::Rectangle mouse);
+			Widget* onMouseOver(Rectangle mouse);
 			/*
 			 * Do nothing on mouse click.
 			 */
-			void onMouseClick(JetMan::Utils::Rectangle mouse) { onClick(); }
+			void onMouseClick(Rectangle mouse) { onClick(); }
 			/*
 			 * Change background colour.
 			 */
@@ -196,11 +252,11 @@ namespace JetMan {
 			/*
 			 * Do nothing.
 			 */
-			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			Widget* onMouseOver(Rectangle mouse) { return nullptr; }
 			/*
 			 * Do nothing.
 			 */
-			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
+			void onMouseClick(Rectangle mouse) {}
 			/*
 			 * Do nothing.
 			 */
@@ -225,7 +281,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse is hovering over the widget.
 			 */
-			Widget* onMouseOver(JetMan::Utils::Rectangle mouse) { return nullptr; }
+			Widget* onMouseOver(Rectangle mouse) { return nullptr; }
 			/*
 			 * Called when the mouse moves out of this component.
 			 */
@@ -233,7 +289,7 @@ namespace JetMan {
 			/*
 			 * Called when the mouse clicks the widget.
 			 */
-			void onMouseClick(JetMan::Utils::Rectangle mouse) {}
+			void onMouseClick(Rectangle mouse) {}
 			/*
 			 * Sets the velocity of the sprite.
 			 */
@@ -313,7 +369,7 @@ namespace JetMan {
 			/*
 			 * Checks whether the rectangle collides with the wall.
 			 */
-			bool collides(JetMan::Utils::Rectangle rect);
+			bool collides(Rectangle rect);
 			/*
 			 * Draws the wall with the gap.
 			 */
@@ -330,7 +386,7 @@ namespace JetMan {
 			/*
 			 * The rectangles represeting the walls.
 			 */
-			JetMan::Utils::Rectangle* walls[4];
+			Rectangle* walls[4];
 			/*
 			 * Updates the bounds of the wall rectangles.
 			 */

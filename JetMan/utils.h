@@ -69,62 +69,6 @@ namespace JetMan {
 			ALLEGRO_BITMAP* jetMan;
 			ALLEGRO_BITMAP* wall;
 		};
-
-		/*
-		 * Used for representing the bounds of objects.
-		 */
-		class Rectangle {
-		public:
-			/*
-			 * Creates a new rectangle with the given bounds.
-			 */
-			Rectangle(float x, float y, float width, float height);
-			/*
-			 * Gets the x coordinate of the rectangle.
-			 */
-			float getX();
-			/*
-			 * Sets the x coordinate of the rectangle.
-			 */
-			void setX(float x);
-			/*
-			 * Gets the x coordinate of the rectangle.
-			 */
-			float getY();
-			/*
-			 * Sets the y coordinate of the rectangle.
-			 */
-			void setY(float y);
-			/*
-			 * Gets the width of the rectangle.
-			 */
-			float getWidth();
-			/*
-			 * Sets the width of the rectangle.
-			 */
-			void setWidth(float width);
-			/*
-			 * Gets the height of the rectangle.
-			 */
-			float getHeight();
-			/*
-			 * Sets the height of the rectangle.
-			 */
-			void setHeight(float height);
-			/*
-			 * Sets the bounds of the rectangle.
-			 */
-			void setBounds(float x, float y, float width, float height);
-			/*
-			 * Determines whether two rectangles intersect or not.
-			 */
-			bool intersects(Rectangle rect);
-		private:
-			float x;
-			float y;
-			float width;
-			float height;
-		};
 	}
 }
 
