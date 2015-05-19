@@ -115,6 +115,10 @@ namespace JetMan {
 		 * Resets the game.
 		 */
 		void reset();
+		/*
+		 * AI decides whether the robot should use the jet or not.
+		 */
+		void demoMove();
 	};
 }
 

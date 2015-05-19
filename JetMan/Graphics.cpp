@@ -384,13 +384,18 @@ void JetMan::Graphics::InformationBox::draw() {
 	al_draw_filled_rectangle(0, 0, bounds.getWidth(), bounds.getHeight(), black);
 	al_draw_text(font, white, 20, 35, ALLEGRO_ALIGN_LEFT, scoreText);
 	if (state==PAUSED) {
-		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Paused [Press Esc to quit or Enter to resume]");
+		al_draw_text(font, white, 250, 35, ALLEGRO_ALIGN_LEFT, "Game Paused [Press Esc to quit or Enter to resume]");
 	}
 	else if(state==ACTIVE){
-		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to pause]");
+		al_draw_text(font, white, 250, 35, ALLEGRO_ALIGN_LEFT, "[Press Esc to pause]");
+	}
+	else if (state == DEMO) {
+		al_draw_text(font, white, 250, 10, ALLEGRO_ALIGN_LEFT, "DEMO [Press Esc to quit]");
+		al_draw_text(font, white, 250, 40, ALLEGRO_ALIGN_LEFT, "For a small jet boost tap the spacebar key");
+		al_draw_text(font, white, 250, 70, ALLEGRO_ALIGN_LEFT, "For a big jet boost hold the spacebar key for a bit longer");
 	}
 	else {
-		al_draw_text(font, white, 300, 35, ALLEGRO_ALIGN_LEFT, "Game Over! [Press Esc to quit or Enter to restart]");
+		al_draw_text(font, white, 250, 35, ALLEGRO_ALIGN_LEFT, "Game Over! [Press Esc to quit or Enter to restart]");
 	}
 }
 
@@ -493,4 +498,11 @@ void JetMan::Graphics::Wall::draw() {
 void JetMan::Graphics::Wall::setPosition(float x, float y) {
 	JetMan::Graphics::Sprite::setPosition(x, y);
 	updateWalls();
+}
+
+/*
+ * The position of the gap.
+ */
+int JetMan::Graphics::Wall::getGapPosition() {
+	return gapPosition;
 }

@@ -160,6 +160,9 @@ int JetMan::Game::loop() {
 						}
 						else {
 							// return to main menu
+							if (state == JetMan::Graphics::InformationBox::DEMO) {
+								soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+							}
 							soundManager.playSound(JetMan::Utils::SoundManager::SAD_PIANO, ALLEGRO_PLAYMODE_BIDIR, 0.6);
 							state = JetMan::Graphics::InformationBox::OVER;
 							info->setState(state);
@@ -196,6 +199,11 @@ int JetMan::Game::loop() {
 			}
 		}
 
+		if (state == JetMan::Graphics::InformationBox::DEMO) {
+			// AI for the demo part of the game
+			demoMove();
+		}
+
 		hasNext = al_get_next_event(timerQueue, &nextEvent);
 		if (hasNext) {
 			// Timer event - Update game here
@@ -214,17 +222,33 @@ int JetMan::Game::loop() {
 
 				if (jetManBounds.getY() > 600 - jetManBounds.getHeight()) {
 					// Crashed down.
-					state = JetMan::Graphics::InformationBox::OVER;
-					info->setState(state);
-					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
-					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+					if (state == JetMan::Graphics::InformationBox::DEMO) {
+						soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+						soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+						soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+						reset();
+					}
+					else {
+						state = JetMan::Graphics::InformationBox::OVER;
+						info->setState(state);
+						soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+						soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+					}
 				}
 				else if ((wall1->collides(jetManBounds)) || (wall2->collides(jetManBounds)) || (wall3->collides(jetManBounds))) {
 					// Collided with a wall.
-					state = JetMan::Graphics::InformationBox::OVER;
-					info->setState(state);
-					soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
-					soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+					if (state == JetMan::Graphics::InformationBox::DEMO) {
+						soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+						soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+						soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+						reset();
+					}
+					else {
+						state = JetMan::Graphics::InformationBox::OVER;
+						info->setState(state);
+						soundManager.stopSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE);
+						soundManager.playSound(JetMan::Utils::SoundManager::CRASH, ALLEGRO_PLAYMODE_ONCE, 0.6);
+					}
 				}
 				else {
 					JetMan::Graphics::Rectangle* w1 = &front->getBounds();
@@ -272,6 +296,8 @@ void JetMan::Game::display() {
  * Implements the play button being clicked.
  */
 void JetMan::Game::PlayButton::onClick() {
+	game->state = JetMan::Graphics::InformationBox::ACTIVE;
+	game->info->setState(game->state);
 	game->currDisplay = &game->gameScreen;
 	game->soundManager.stopSound(JetMan::Utils::SoundManager::SAD_PIANO);
 	game->soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
@@ -282,7 +308,12 @@ void JetMan::Game::PlayButton::onClick() {
  * Implements the demo button being clicked.
  */
 void JetMan::Game::DemoButton::onClick() {
-	
+	game->state = JetMan::Graphics::InformationBox::DEMO;
+	game->info->setState(game->state);
+	game->currDisplay = &game->gameScreen;
+	game->soundManager.stopSound(JetMan::Utils::SoundManager::SAD_PIANO);
+	game->soundManager.playSound(JetMan::Utils::SoundManager::MISSION_IMPOSSIBLE, ALLEGRO_PLAYMODE_BIDIR, 0.6);
+	game->reset();
 }
 
 /*
@@ -296,8 +327,6 @@ void JetMan::Game::QuitButton::onClick() {
  * Resets the game.
  */
 void JetMan::Game::reset() {
-	state = JetMan::Graphics::InformationBox::ACTIVE;
-	info->setState(state);
 	jetMan->setPosition(50, 250);
 	jetMan->setVelocityY(0);
 	score = 0;
@@ -307,4 +336,27 @@ void JetMan::Game::reset() {
 	wall3->setPosition(1460, 100);
 	front = wall1;
 	back = wall3;
+}
+
+/*
+ * Simulated AI to decide whether the robot should move or not.
+ */
+void JetMan::Game::demoMove() {
+	JetMan::Graphics::Rectangle nextWallBounds = front->getBounds();
+	JetMan::Graphics::Rectangle jetManBounds = jetMan->getBounds();
+
+	int gapY = 100 + 100 * front->getGapPosition();			// The y position of the gap.
+	if (jetManBounds.getY() < gapY) {
+		// JetMan is above the gap position - Let gravity pull him down
+	}
+	else if (jetManBounds.getY()> gapY + nextWallBounds.getHeight()) {
+		// JetMan is below the gap position
+		jetMan->setVelocityY(-180);
+	}
+	else {
+		// JetMan is line up in between the gap - Do little jump when he gets to a certain y coordinate just above the wall.
+		if (jetManBounds.getY() + jetManBounds.getHeight() > gapY + nextWallBounds.getHeight() - 10) {
+			jetMan->setVelocityY(-70);
+		}
+	}
 }

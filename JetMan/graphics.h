@@ -231,7 +231,7 @@ namespace JetMan {
 		 */
 		class InformationBox : public Widget {
 		public:
-			enum State{ ACTIVE, PAUSED, OVER };
+			enum State{ ACTIVE, PAUSED, OVER, DEMO };
 			/*
 			 * Creates a new Information Box.
 			 */
@@ -378,6 +378,10 @@ namespace JetMan {
 			 * Need to update the wall bounds when the position is changed.
 			 */
 			void setPosition(float x, float y);
+			/*
+			 * The position of the gap.
+			 */
+			int JetMan::Graphics::Wall::getGapPosition();
 		private:
 			/*
 			 * blocks 1-3 from the top can be a gap.
