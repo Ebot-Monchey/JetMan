@@ -342,7 +342,7 @@ namespace JetMan {
 			 */
 			void update(float delta);
 		private:
-			const float gravity = 190;			// gravity value - tweak for preferrence
+			const float gravity = 90;			// gravity value - tweak for preferrence
 		};
 
 		/*

@@ -405,8 +405,8 @@ void JetMan::Graphics::InformationBox::draw() {
  */
 void JetMan::Graphics::JetManSprite::update(float delta) {
 	dy += gravity*delta;
-	if (dy > 200) {
-		dy = 200;
+	if (dy > 110) {
+		dy = 110;
 	}
 	JetMan::Graphics::Sprite::update(delta);
 }
