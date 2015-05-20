@@ -185,7 +185,7 @@ int JetMan::Game::loop() {
 					if (currDisplay == &(gameScreen)) {
 						if (state == JetMan::Graphics::InformationBox::ACTIVE) {
 							spaceLengthHeld = al_current_time() - spaceStartHold;
-							if (spaceLengthHeld > 0.3f) {
+							if (spaceLengthHeld > 0.2f) {
 								jetMan->setVelocityY(-120);
 							}
 							else {
